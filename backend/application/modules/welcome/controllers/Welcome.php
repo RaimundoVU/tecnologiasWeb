@@ -22,4 +22,14 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function json() { 
+
+		header('Content-Type: application/json');
+	  
+		$js = ['id'=>12, 'name'=>'Topi'];
+	  
+		echo json_encode($js);
+	  
+	  } 
 }

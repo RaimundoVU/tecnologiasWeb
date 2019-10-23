@@ -22,4 +22,13 @@ class Cambio extends CI_Controller {
 	{
 		$this->load->view('cambio');
 	}
+	public function json() { 
+
+		header('Content-Type: application/json');
+	  
+		$js = ['id'=>12, 'msg'=>'te pegai la mision?'];
+	  
+		echo json_encode($js);
+	  
+	  } 
 }
