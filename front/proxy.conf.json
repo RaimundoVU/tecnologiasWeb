@@ -1,8 +1,0 @@
-{
-    "/cambio/*": {
-      "target": "http://localhost/tecnologiasWeb/backend/index.php/cambio",
-      "secure": false,
-      "logLevel": "debug",
-      "pathRewrite": {"^/cambio/" : ""}
-    }
-  }
