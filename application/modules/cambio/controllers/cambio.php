@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Cambio extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +20,15 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('cambio');
 	}
+	public function json() { 
+
+		header('Content-Type: application/json');
+	  
+		$js = ['id'=>12, 'msg'=>'te pegai la mision?'];
+	  
+		echo json_encode($js);
+	  
+	  } 
 }
