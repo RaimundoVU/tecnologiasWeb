@@ -38,7 +38,7 @@ CREATE TABLE usuario(
 
 id_usuario INTEGER PRIMARY KEY,
 email VARCHAR(40) NOT NULL,
-nombres VARCHAR (82) NOT NULL
+nombres VARCHAR (82) NOT NULL,
 apellido_materno VARCHAR(40) NOT NULL,
 apellido_paterno VARCHAR(40) NOT NULL,
 clave VARCHAR(20) NOT NULL,
