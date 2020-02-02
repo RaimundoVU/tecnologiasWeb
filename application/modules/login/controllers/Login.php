@@ -1,29 +1,47 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends MX_Controller {
+class Login extends MY_Controller {
 	
 	public function __construct(){
 		parent::__construct();
 		$this->load->model("loginModel");
-		$this->load->library('session');
 	}
 	
 	public function index()
 	{
+		if($this->session->userdata('login')){
+			switch ($this->session->userdata('type')) {
+				case 1:
+					//usuario 1
+					redirect(base_url()."cambio");
+					break;
+				case 2:
+					//usuario 2
+					redirect(base_url()."cambio2");
+					break;
+				case 3:
+					//usuario 3
+					redirect(base_url()."cambio3");
+					break;
+			}			
+		}
+		else{
+			$this->load->view('login');
+		}
 	}
 
-	public function logeo(){
+	public function in(){
 		
-		$correo = $this->input->post("email");
-		$clave = $this->input->post("password");
-		$data['correo'] = $correo;
+		$email = $this->input->post("email");
+		$password = $this->input->post("password");
+		$data['email'] = $email;
 		$login= FALSE;
-		$login = $this->loginModel->validarUsuario($correo,$clave);
+		$login = $this->loginModel->validateUser($email,$password);
+		$type = $this->loginModel->getUserType($email,$password);
+		$data['type'] = $type;
 		$data['login'] =$login;
 		$this->session->set_userdata($data);
-		header('Content-Type: application/json');
-		$response = ['login'=>$login,'correo'=>$correo, 'expirate'=>$this->session];
-		echo json_encode($response);
+		$this->index();
 	}
 }
