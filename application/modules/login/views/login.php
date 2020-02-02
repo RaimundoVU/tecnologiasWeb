@@ -1,6 +1,11 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>../css/login.css">
+<!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"!-->
+<head>
+  <meta charset="utf-8">
+  <title>Tecnologías web - Proyecto</title>
+  <script type="text/javascript" src="<?= base_url('../js/jquery-3.4.1.js'); ?>"></script>
+  <script type="text/javascript" src="<?= base_url() ?>../js/bs/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>../css/bs/bootstrap.css">
+</head>
 <body>
 	<div class="container p-5">
 		<div class="row">

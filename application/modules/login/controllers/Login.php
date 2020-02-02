@@ -14,7 +14,7 @@ class Login extends MY_Controller {
 			switch ($this->session->userdata('type')) {
 				case 1:
 					//usuario 1
-					redirect(base_url()."cambio");
+					redirect(base_url()."users");
 					break;
 				case 2:
 					//usuario 2
