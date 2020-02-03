@@ -36,7 +36,7 @@ codigo_asignatura INTEGER NOT NULL
 
 CREATE TABLE usuario(
 
-id_usuario INTEGER PRIMARY KEY,
+id_usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
 email VARCHAR(40) NOT NULL,
 nombres VARCHAR (82) NOT NULL,
 apellido_materno VARCHAR(40) NOT NULL,

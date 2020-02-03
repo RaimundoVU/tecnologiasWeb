@@ -30,7 +30,23 @@ class User_model extends CI_Model {
 
   public function get_all() {
     $this->db->select('*');
-    return $this->db->get('usuario');
+    return $this->db->get('usuario')->result();
+  }
+
+  public function add($names, $last_name, $mothers_last_name, $email, $password, $user_type) {
+  	$data['nombres'] = $names;
+  	$data['email'] = $email;
+  	$data['apellido_materno'] = $mothers_last_name;
+  	$data['apellido_paterno'] = $last_name;
+  	$data['clave'] = $password;
+  	$data['tipo'] = $user_type;
+
+  	$this->db->insert('usuario', $data);
+  }
+
+  public function delete($id) {
+  	$this->db->where('id_usuario', $id);
+  	$this->db->delete('usuario');
   }
 
 
