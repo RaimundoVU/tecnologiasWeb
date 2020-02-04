@@ -35,8 +35,23 @@ class users extends MY_Controller {
 		$password = $this->input->post('password');
 		$user_type = $this->input->post('user_type');
 
-
 		$this->user_model->add($names, $last_name, $mothers_last_name, $email, $password, $user_type);
+
+		$data['users'] = $this->user_model->get_all();
+		return $this->render_page('users_list', $data);
+	}
+
+	public function	update_user() {
+		$id = $this->input->post('id');
+		$names = $this->input->post('names');
+		$last_name = $this->input->post('last_name');
+		$mothers_last_name = $this->input->post('mothers_last_name');
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		$user_type = $this->input->post('user_type');
+
+
+		$this->user_model->update($id, $names, $last_name, $mothers_last_name, $email, $password, $user_type);
 
 		$data['users'] = $this->user_model->get_all();
 		return $this->render_page('users_list', $data);

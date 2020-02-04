@@ -44,6 +44,18 @@ class User_model extends CI_Model {
   	$this->db->insert('usuario', $data);
   }
 
+	public function update($id, $names, $last_name, $mothers_last_name, $email, $password, $user_type) {
+  		$data['nombres'] = $names;
+		$data['email'] = $email;
+		$data['apellido_materno'] = $mothers_last_name;
+		$data['apellido_paterno'] = $last_name;
+		$data['clave'] = $password;
+		$data['tipo'] = $user_type;
+
+		$this->db->where('id_usuario', $id);
+		$this->db->update('usuario', $data);
+	}
+
   public function delete($id) {
   	$this->db->where('id_usuario', $id);
   	$this->db->delete('usuario');
