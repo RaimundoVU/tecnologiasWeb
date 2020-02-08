@@ -15,6 +15,12 @@ class MY_Controller extends MX_Controller {
             $this->load->library('security');
         }
     }
+
+    protected function render_page($view, $data = []) {
+        $this->load->view('header', $data);
+        $this->load->view($view, $data);
+        $this->load->view('footer', $data);
+    }
 }
 /* End of file MY_Controller.php */
 /* Location: ./application/core/MY_Controller.php */
