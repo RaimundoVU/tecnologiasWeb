@@ -7,9 +7,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <title>Tecnologías web - Proyecto</title>
-  <script type="text/javascript" src="<?= base_url('js/jquery-3.4.1.js'); ?>"></script>
-  <script type="text/javascript" src="<?= base_url() ?>/js/bs/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/bs/bootstrap.css">
+  <script type="text/javascript" src="<?= base_url('../js/jquery-3.4.1.js'); ?>"></script>
+  <script type="text/javascript" src="<?= base_url() ?>../js/bs/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>../css/bs/bootstrap.css">
 </head>
 <style type="text/css">
 	::selection {
