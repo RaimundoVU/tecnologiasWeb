@@ -14,8 +14,10 @@ nombre VARCHAR(50)
 
 CREATE TABLE instancia_asignatura(
 
+id_ins_asignatura INTEGER AUTO_INCREMENT PRIMARY KEY,
 codigo_asignatura INTEGER NOT NULL,
 fecha_creacion DATE NOT NULL
+
 );
 
 CREATE TABLE estudiante(
@@ -23,9 +25,7 @@ CREATE TABLE estudiante(
 matricula INTEGER PRIMARY KEY,
 nombre VARCHAR(40) NOT NULL,
 apellido_materno VARCHAR(40),
-apellido_paterno VARCHAR(40),
-codigo_asignatura INTEGER NOT NULL
-
+apellido_paterno VARCHAR(40)
 
 );
 
@@ -105,9 +105,8 @@ codigo_reunion INTEGER NOT NULL
 
 
 ALTER TABLE instancia_asignatura ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE estudiante ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE asignatura_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
-ALTER TABLE asignatura_usuario ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
+ALTER TABLE asignatura_usuario ADD FOREIGN KEY (codigo_asignatura) REFERENCES instancia_asignatura(id_ins_asignatura);
 ALTER TABLE directorio ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE evaluacion ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE nota ADD FOREIGN KEY (matricula_estudiante) REFERENCES estudiante(matricula);
