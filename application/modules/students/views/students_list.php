@@ -71,35 +71,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Módulo Usuarios</h1>
 
 	<div id="body">
-	<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
+	<table class="table">
+      <th>Matricula</th>
+	  <th>Nombre</th>
+	  <th>Apellido Paterno</th>
+	  <th>Apellido Materno</th>
+	  <th></th>
+	  <th></th>
+	<?$i=0;foreach($resultado as $row):?>
+		<tr>
+			<td>
+				<input type="hidden" id="a<?=$i?>" value=<?="$row->matricula"?> readonly>
+				<p><?=$row->matricula?></p>
+			</td>
+			<td>
+				<input type="hidden" id="b<?=$i?>" value=<?="$row->nombre"?> readonly>
+				<p><?=$row->nombre?></p>
+			</td>
+			<td>
+				<input type="hidden" id="c<?=$i?>" value=<?="$row->apellido_paterno"?> readonly>
+				<p><?=$row->apellido_paterno?></p>
+			</td>
+			<td>
+				<input type="hidden" id="d<?=$i?>" value=<?="$row->apellido_materno"?> readonly>
+				<p><?=$row->apellido_materno?></p>
+			</td>
+			<td><button class="btn btn-secondary" onclick="editar(<?=$i?>)">Editar</button></td>
+			<td><button class="btn btn-danger" onclick="eliminar(<?=$i?>)">Eliminar</button></td>
+		</tr>
+	<?$i++;endforeach;?>
 </table>
 	</div>
 
