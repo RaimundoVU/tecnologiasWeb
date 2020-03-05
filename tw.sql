@@ -16,12 +16,7 @@ CREATE TABLE instancia_asignatura(
 
 codigo_asignatura INTEGER NOT NULL,
 fecha_creacion DATE NOT NULL
-
-
-
 );
-
-
 
 CREATE TABLE estudiante(
 
@@ -68,22 +63,24 @@ ruta VARCHAR(150) NOT NULL
 
 CREATE TABLE evaluacion (
 
-codigo_evaluacion INTEGER PRIMARY KEY,
-topixo VARCHAR(50) NOT NULL,
+codigo_evaluacion INTEGER PRIMARY KEY AUTO_INCREMENT,
+titulo VARCHAR(50) NOT NULL,
 codigo_asignatura INTEGER NOT NULL,
-codigo_nota INTEGER NOT NULL
+fecha DATE,
+descripcion VARCHAR(120) NOT NULL
+);
 
-
+CREATE TABLE evaluacion_nota (
+ codigo_evaluacion INTEGER NOT NULL,
+ codigo_nota INTEGER NOT NULL
 );
 
 CREATE TABLE nota(
 
-codigo_nota INTEGER PRIMARY KEY,
+codigo_nota INTEGER PRIMARY KEY AUTO_INCREMENT,
 observacion VARCHAR(140) NOT NULL,
 valor DECIMAL NOT NULL,
 matricula_estudiante INTEGER NOT NULL
-
-
 );
 
 
@@ -113,11 +110,12 @@ ALTER TABLE asignatura_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(i
 ALTER TABLE asignatura_usuario ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE directorio ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE evaluacion ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE evaluacion ADD FOREIGN KEY (codigo_nota) REFERENCES nota(codigo_nota);
 ALTER TABLE nota ADD FOREIGN KEY (matricula_estudiante) REFERENCES estudiante(matricula);
 ALTER TABLE reunion ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE estudiante_reunion ADD FOREIGN KEY (matricula_estudiante) REFERENCES estudiante(matricula);
 ALTER TABLE estudiante_reunion ADD FOREIGN KEY (codigo_reunion) REFERENCES reunion(codigo);
+ALTER TABLE evaluacion_nota ADD FOREIGN KEY (codigo_evaluacion) REFERENCES evaluacion(codigo_evaluacion);
+ALTER TABLE evaluacion_nota ADD FOREIGN KEY (codigo_nota) REFERENCES nota(codigo_nota);
 
 
 
