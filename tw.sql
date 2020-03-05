@@ -15,8 +15,8 @@ nombre VARCHAR(50)
 CREATE TABLE instancia_asignatura(
 
 codigo_asignatura INTEGER NOT NULL,
-fecha_creacion DATE NOT NULL
-
+fecha_creacion DATE NOT NULL,
+id_profesor INTEGER NOT NULL
 
 
 );
@@ -108,6 +108,7 @@ codigo_reunion INTEGER NOT NULL
 
 
 ALTER TABLE instancia_asignatura ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
+ALTER TABLE instancia_asignatura ADD FOREIGN KEY (id_profesor) REFERENCES usuario(id_usuario);
 ALTER TABLE estudiante ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
 ALTER TABLE asignatura_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE asignatura_usuario ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
