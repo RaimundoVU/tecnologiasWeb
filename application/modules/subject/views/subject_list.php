@@ -126,7 +126,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </tr>
   </thead>
   <tbody>
-    <tr>
+  <? ?>
+  <?$i=0; foreach($subjects as $row):?>
+	<tr>
+	<th scope="row"><? echo $i+1?></th>
+	<td><? echo $row->codigo_asignatura?></td>
+	<td><? echo $row->nombre?></td>
+	<td>----</td>
+	<td><button class="btn btn-warning" id="seeSubject">Ver</button> <button class="btn btn-primary">Asignar Docente</button> <button class="btn btn-danger">Eliminar</button></td>
+	</tr>
+	<?$i++;endforeach;?>
+	<tr>
       <th scope="row">1</th>
       <td>0002</td>
 	  <td>Tecnologias Webs</td>
@@ -140,7 +150,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  <td>2019-2</td>
       <td><button class="btn btn-warning" id="seeSubject">Ver</button> <button class="btn btn-primary">Asignar Docente</button> <button class="btn btn-danger">Eliminar</button></td>
     </tr>
-   
   </tbody>
 </table>
 	</div>
