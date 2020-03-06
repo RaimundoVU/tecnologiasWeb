@@ -9,18 +9,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <title>Tecnologías web - Proyecto</title>
   <script type="text/javascript" src="<?= base_url('js/jquery-3.4.1.js'); ?>"></script>
   <script type="text/javascript" src="<?= base_url() ?>/js/bs/bootstrap.min.js"></script>
+  <script defer src="<?= base_url()?>/fontawesome/js/all.js"></script>
   <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/bs/bootstrap.css">
 </head>
 <style type="text/css">
-	::selection {
-		background-color: #E13300;
-		color: white;
-	}
-
-	::-moz-selection {
-		background-color: #E13300;
-		color: white;
-	}
+	
 
 	body {
 		background-color: #fff;
@@ -88,27 +81,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown pull-right">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
 	</ul>
 	<div class="dropdown">
 	<button class="dropdown-toggle btn-primary btn" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Perfil
 	</button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Log out</a>
+          <a class="dropdown-item" href="#">Cerrar sesión</a>
         </div>
 	</div>
   </div>

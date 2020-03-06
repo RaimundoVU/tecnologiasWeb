@@ -15,6 +15,9 @@ class dashboard extends MY_Controller {
 		//$this->load->view('users_list');
 		$data['users'] = $this->user_model->get_all();
 
+
+		$data['sections'] = ['Cálculo I', 'Introducción a la programación','Cómo acosar en ayudantias', 'Cómo ser infunable I', 'Cómo ser infunable II', 'Algoritmos y estructuras de datos', 'COA I' ];
+
 		$this->render_page('dashboard', $data);
 	}
 	
