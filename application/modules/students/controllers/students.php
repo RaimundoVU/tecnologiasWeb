@@ -37,7 +37,24 @@ class students extends MY_Controller {
 			echo json_encode( array('ok' => true) );
 			return;
 		}
-		echo json_encode( array('ok' => false) );	
+		echo json_encode( array('ok' => false) );
+		return;
+	}
+
+	public function add_student_in_subject()
+	{
+		header('Content-type: application/json');
+		$data = [
+			'codigo_asignatura' => $this->input->post('id_ins_asig'),
+			'id_usuario' => $this->input->post('matricula')
+		];
+
+		if ($this->student_model->check_student_in_subject($data)) {
+			$this->student_model->add_student_in_subject($data);
+			echo json_encode(['ok'=>true]);
+			return;
+		}
+		echo json_encode(['ok'=>false]);
 		return;
 	}
 }

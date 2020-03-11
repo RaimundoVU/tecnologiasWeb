@@ -37,12 +37,16 @@ class Student_model extends CI_Model {
       }
       return $data;
     }
-    return ;
+    return;
   }
 
   public function add_student($data)
   {
     $this->db->insert('estudiante',$data);
+  }
+  public function add_student_in_subject($data)
+  {
+    $this->db->insert('asignatura_usuario',$data);
   }
 
   public function check($matricula)
@@ -50,6 +54,15 @@ class Student_model extends CI_Model {
     $query = $this->db->get_where('estudiante', array(
       'matricula' => $matricula
     ));
+    $count = $query->num_rows();
+    return $count === 0;
+  }
+  public function check_student_in_subject($data)
+  {
+    $query = $this->db->get_where('asignatura_usuario', [
+        'id_usuario' => $data['id_usuario'],
+        'codigo_asignatura' => $data['codigo_asignatura']
+    ]);
     $count = $query->num_rows();
     return $count === 0;
   }
