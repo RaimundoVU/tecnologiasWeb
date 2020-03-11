@@ -65,45 +65,128 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	</style>
 </head>
-<body>
-
+<body id="student_body">
 <div id="container">
-	<h1>Módulo Usuarios</h1>
-
+	<h1>Módulo Estudiantes</h1>
+	<div>
+		<button class="btn btn-primary" onclick="mostrarModal()">Agregar estudiante</button>
+	</div>
 	<div id="body">
-	<table class="table">
-      <th>Matricula</th>
-	  <th>Nombre</th>
-	  <th>Apellido Paterno</th>
-	  <th>Apellido Materno</th>
-	  <th></th>
-	  <th></th>
-	<?$i=0;foreach($resultado as $row):?>
-		<tr>
-			<td>
-				<input type="hidden" id="a<?=$i?>" value=<?="$row->matricula"?> readonly>
-				<p><?=$row->matricula?></p>
-			</td>
-			<td>
-				<input type="hidden" id="b<?=$i?>" value=<?="$row->nombre"?> readonly>
-				<p><?=$row->nombre?></p>
-			</td>
-			<td>
-				<input type="hidden" id="c<?=$i?>" value=<?="$row->apellido_paterno"?> readonly>
-				<p><?=$row->apellido_paterno?></p>
-			</td>
-			<td>
-				<input type="hidden" id="d<?=$i?>" value=<?="$row->apellido_materno"?> readonly>
-				<p><?=$row->apellido_materno?></p>
-			</td>
-			<td><button class="btn btn-secondary" onclick="editar(<?=$i?>)">Editar</button></td>
-			<td><button class="btn btn-danger" onclick="eliminar(<?=$i?>)">Eliminar</button></td>
-		</tr>
-	<?$i++;endforeach;?>
-</table>
+		<div id="listado">
+			<table class="table">
+				<th>Matricula</th>
+				<th>Nombre</th>
+				<th>Apellido Paterno</th>
+				<th>Apellido Materno</th>
+				<th></th>
+				<th></th>
+				<?$i=0;foreach($resultado as $row):?>
+					<tr>
+						<td>
+							<input type="hidden" id="a<?=$i?>" value=<?="$row->matricula"?> readonly>
+							<p><?=$row->matricula?></p>
+						</td>
+						<td>
+							<input type="hidden" id="b<?=$i?>" value=<?="$row->nombre"?> readonly>
+							<p><?=$row->nombre?></p>
+						</td>
+						<td>
+							<input type="hidden" id="c<?=$i?>" value=<?="$row->apellido_paterno"?> readonly>
+							<p><?=$row->apellido_paterno?></p>
+						</td>
+						<td>
+							<input type="hidden" id="d<?=$i?>" value=<?="$row->apellido_materno"?> readonly>
+							<p><?=$row->apellido_materno?></p>
+						</td>
+						<td><button class="btn btn-secondary" onclick="editar(<?=$i?>)">Editar</button></td>
+						<td><button class="btn btn-danger" onclick="eliminar(<?=$i?>)">Eliminar</button></td>
+					</tr>
+				<?$i++;endforeach;?>
+			</table>
+		</div>
 	</div>
 
 </div>
 
 </body>
+
+<div id="student_modal" style="display: none;" class="modal" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5>Registrar usuario</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-signin">
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="matricula" name="matricula" placeholder="Matricula" 	
+					value="<?php echo set_value('matricula'); ?>">
+				</div> 
+				<div class="form-group">
+					<input type="text" class="form-control" id="nombre_estudiante" placeholder="Nombre Estudiante" name="nombre_estudiante"
+					value="<?php echo set_value('nombre_estudiante'); ?>">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="apellido_p" placeholder="Apellido Paterno" name="apellido paterno"
+					value="<?php echo set_value('apellido_p'); ?>">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="apellido_m" placeholder="Apellido Materno" name="apellido materno"
+					value="<?php echo set_value('apellido_m'); ?>">
+				</div>             
+            </div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<button class="btn btn-success" onclick="save_student()" id="upload">Guardar Estudiante</button>
+			</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+<script type="text/javascript">
+var base_url = '<? echo base_url()?>'
+function reload_view(){
+	$.post(
+		base_url+"students/reload_view",
+		{},
+		function(url,data){
+			$("#container").html(url,data);
+		}
+	)
+}
+function mostrarModal(){
+		$("#student_modal").modal('show');
+	}
+function save_student() {
+	var matricula = $("#matricula").val();
+	var nombre_estudiante = $("#nombre_estudiante").val();
+	var apellido_p 	= $("#apellido_p").val();
+	var apellido_m = $("#apellido_m").val();
+	console.log(matricula);
+	console.log(nombre_estudiante);
+	console.log(apellido_p);
+	console.log(apellido_m);
+	console.log(base_url);
+	$.post (
+		base_url+"students/add_student",
+		{
+			matricula:matricula,
+			nombre:nombre_estudiante,
+			apellido_p:apellido_p,
+			apellido_m:apellido_m,
+		},function(){
+			$("#student_modal").modal('hide');
+			$("#container").hide('slow');
+			reload_view();
+			$("#container").show('slow');
+		}
+	)
+}
+
+</script>
 </html>

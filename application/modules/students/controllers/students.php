@@ -22,14 +22,20 @@ class students extends MY_Controller {
 		return $this->student_model->get_all();
 	}
 	
+	public function reload_view()
+	{
+		$data['resultado'] = $this->list_all();
+		$this->load->view('students_list', $data);
+	}
+
 	public function add_student()
 	{
 		header('Content-Type: application/json');
 		$data = array(
 			'matricula' => $this->input->post('matricula'),
 			'nombre' => $this->input->post('nombre'),
-			'apellido_materno' => $this->input->post('apellido_materno'),
-			'apellido_paterno' => $this->input->post('apellido_paterno')
+			'apellido_materno' => $this->input->post('apellido_m'),
+			'apellido_paterno' => $this->input->post('apellido_p')
 		);
 		if ($this->student_model->check($this->input->post('matricula'))) 
 		{
