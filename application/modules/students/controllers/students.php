@@ -45,8 +45,8 @@ class students extends MY_Controller {
 	{
 		header('Content-type: application/json');
 		$data = [
-			'codigo_asignatura' => $this->input->post('id_ins_asig'),
-			'id_usuario' => $this->input->post('matricula')
+			'id_estudiante' => $this->input->post('matricula'),
+			'id_instancia_asignatura' => $this->input->post('id_ins_asig')
 		];
 
 		if ($this->student_model->check_student_in_subject($data)) {
