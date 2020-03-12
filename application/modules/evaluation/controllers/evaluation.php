@@ -3,21 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class evaluation extends MY_Controller {
 
-	var $idSubject;
 
 	public function __construct(){
 		parent::__construct();
-		$this->idSubject = $this->input->get('idSubject');
 		$this->load->model("evaluationModel");
 	}
 
 	public function index()
-	{
+	{	
 		$this->render_page('evaluation');
 	}
 
-	public function getEvaluations(){
-	 	$data['evaluations'] = $this->evaluationModel->getEvaluations(1);
+	public function ev($id) {
+		$data['id'] = $id;
+		$this->render_page('evaluation', $data);
+	}
+
+	public function getEvaluations($id){
+	
+	 	$data['evaluations'] = $this->evaluationModel->getEvaluations($id);
 		return $this->load->view('evaluationsTable',$data);
 	}
 
@@ -25,6 +29,14 @@ class evaluation extends MY_Controller {
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
 		$date = $this->input->post("date");
-		$this->evaluationModel->saveEvaluation($title, $description, $date, $this->idSubject);
+		return $this->evaluationModel->saveEvaluation($title, $description, $date,1);
+	}
+
+	public function update(){
+		$title = $this->input->post("title");
+		$description = $this->input->post("description");
+		$date = $this->input->post("date");
+		$id = $this->input->post("idEv");
+		return $this->evaluationModel->updateEvaluation($title, $description, $date, $id);
 	}
 }
