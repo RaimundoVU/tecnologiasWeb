@@ -199,14 +199,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	function to_students(index)
 	{
-		$subject_id = $("#id"+index).val();
-		$.ajax({
-			url: "<?php echo base_url('student/index'); ?>",
-			method: "POST",
-			data: {'subject_id': subject_id},
-			success:function(){}
-			}
-		})
+		let subject_id = $("#id"+index).val();
+		window.location.replace("<?php echo base_url('students/subject/'); ?>" + subject_id);	
 	}
 
 

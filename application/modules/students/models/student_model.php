@@ -25,7 +25,7 @@ class Student_model extends CI_Model {
 
   public function index()
   {
-    // 
+    //  
   }
 
   public function get_all() {
@@ -75,11 +75,14 @@ class Student_model extends CI_Model {
   
   public function get_students_in_subject($id_ins)
   {
-    $query = $this->db->get_where('asignatura_estudiante', [
-      'id_instancia_asignatura' => $id_ins
-    ]);
+    $this->db->select('*');
+    $this->db->from('estudiante');
+    $this->db->join('asignatura_estudiante', 'estudiante.matricula=asignatura_estudiante.id_estudiante', 'inner');
+    $this->db->where('asignatura_estudiante.id_instancia_asignatura', $id_ins);
+    $query = $this->db->get();    
     if ($query->num_rows() > 0) {
       foreach ($query->result() as $row) {
+        
         $data[] = $row;
       }
       return $data;

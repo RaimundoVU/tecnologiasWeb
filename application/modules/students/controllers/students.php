@@ -12,8 +12,13 @@ class students extends MY_Controller {
 	public function index()
 	{
 		//$this->load->view('users_list');
-		$data['subject_id'] = $this->input->post('subject_id');
-		$data['resultado'] = $this->get_students_in_subject($data['subject_id']);
+		$data['resultado'] = $this->list_all();
+		$this->render_page('students_list', $data);
+	}
+
+	public function subject($id_asig){
+		$data['id_asig'] = $id_asig;
+		$data['resultado'] = $this->get_students_in_subject($id_asig);
 		$this->render_page('students_list', $data);
 	}
 
@@ -39,7 +44,8 @@ class students extends MY_Controller {
 		);
 		if ($this->student_model->check($this->input->post('matricula'))) 
 		{
-			$this->student_model->add_student($data);		
+			$this->student_model->add_student($data);
+			$this->add_student_in_subject($this->input->post('subject_id'), $data['matricula']);
 			echo json_encode( array('ok' => true) );
 			return;
 		}
@@ -47,12 +53,11 @@ class students extends MY_Controller {
 		return;
 	}
 
-	public function add_student_in_subject()
+	public function add_student_in_subject($id_asig, $matricula)
 	{
-		header('Content-type: application/json');
 		$data = [
-			'id_estudiante' => $this->input->post('matricula'),
-			'id_instancia_asignatura' => $this->input->post('id_ins_asig')
+			'id_estudiante' => $matricula,
+			'id_instancia_asignatura' => $id_asig
 		];
 
 		if ($this->student_model->check_student_in_subject($data)) {
@@ -85,11 +90,8 @@ class students extends MY_Controller {
 
 	public function get_students_in_subject($subject_id)
 	{
-		header('Content-type: application/json');
 		try {
-			$this->student_model->get_students_in_subject($subject_id);
-			echo json_encode(['ok'=>true]);
-			return;
+			return $this->student_model->get_students_in_subject($subject_id);	
 		} catch (\Exception $e) {
 			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
 			return;
