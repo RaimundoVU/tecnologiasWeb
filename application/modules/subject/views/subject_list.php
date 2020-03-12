@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="utf-8">
 	<title>Welcome to module users</title>
 
@@ -63,6 +64,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
+
+	.search_box
+ 	{
+		width:100%;
+		max-width: 650px;
+		margin:0 auto;
+		z-index: 9999999999 !important;
+ 	}
+	.pac-container {
+    	z-index: 9999999999 !important;
+	}
+	
+	ul.ui-autocomplete {
+    	z-index: 1100 !important;
+	}
 	</style>
 </head>
 <body>
@@ -82,27 +98,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-	  <form>
-			<div class="form-group">
-				<label for="exampleInputEmail1">Codigo de la asignatura</label>
-				<input type="text" class="form-control" id="codeInput" aria-describedby="emailHelp" placeholder="Ingrese un codigo">
+      <div class="modal-body w-100">
+	  <form id="subjectForm">
+	  		<div>
+			  <input type="hidden" id="subject_code">
 			</div>
-			<div class="form-group">
+			<div class="form-group ui-widget">
 				<label for="exampleInputPassword1">Nombre de la asignatura</label>
-				<input type="text" class="form-control" id="nameInput" placeholder="Ingrese un nombre">
+    			<input class="form-control " type="text" id="search_input" placeholder="Buscar Asignatura" autocomplete="off" />
 			</div>
 			
 			<div class="form-group">
-			<label for="exampleInputPassword1">Docente</label>
-				<select class="custom-select" id="teacherInput">
-					<option selected>Escoja un docente</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+			<label for="exampleInputPassword1">Semestre</label>
+				<select class="custom-select" id="semesterInput">
+					<option selected>Escoja un Semestre</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
 				</select>
 				</div>
-			<button type="submit" class="btn btn-primary">Guardar</button>
+			<button type="submit"  class="btn btn-primary">Guardar</button>
 </form>
       </div>
       <div class="modal-footer">
@@ -130,31 +144,73 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?$i=0; foreach($subjects as $row):?>
 	<tr>
 	<th scope="row"><? echo $i+1?></th>
-	<td><? echo $row->codigo_asignatura?></td>
-	<td><? echo $row->nombre?></td>
-	<td>----</td>
-	<td><button class="btn btn-warning" id="seeSubject">Ver</button> <button class="btn btn-primary">Asignar Docente</button> <button class="btn btn-danger">Eliminar</button></td>
+	<td><input type="hidden" id="id<?=$i?>" value="<?=$row->id?>" readonly>
+	<? echo $row->codigo?></td>
+	<td><? echo $row->nombre ?></td>
+	<td><? echo $row->anho?>-<? echo $row->semestre?></td>
+	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> <button class="btn btn-primary">Evaluaciones</button> 
 	</tr>
 	<?$i++;endforeach;?>
-	<tr>
-      <th scope="row">1</th>
-      <td>0002</td>
-	  <td>Tecnologias Webs</td>
-	  <td>2019-2</td>
-      <td><button class="btn btn-warning" id="seeSubject">Ver</button> <button class="btn btn-primary">Asignar Docente</button> <button class="btn btn-danger">Eliminar</button></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>0004</td>
-	  <td>Maquinas Abstractas</td>
-	  <td>2019-2</td>
-      <td><button class="btn btn-warning" id="seeSubject">Ver</button> <button class="btn btn-primary">Asignar Docente</button> <button class="btn btn-danger">Eliminar</button></td>
-    </tr>
   </tbody>
 </table>
 	</div>
 
 </div>
 
+	
+<script type="text/javascript">
+	
+	$(function() {
+		$("#search_input").autocomplete({
+			source: "<?php echo base_url('subject/fetch'); ?>",
+			select: function( event, ui ) {
+				event.preventDefault();
+				$("#search_input").val(ui.item.value);
+				$("#subject_code").val(ui.item.id);
+			}
+		});
+	});
+
+	$(document).ready(function(){
+		$("#subjectForm").on('submit',function(e){
+			e.preventDefault();
+			if($("#subject_code").val()=='' || $("#semesterInput").val()=='')
+			{
+				alert("Campos obligatorios");
+			}
+			else
+			{
+				let semester = $("#semesterInput").val();
+				let code = $("#subject_code").val();
+				$.ajax({
+					url: "<?php echo base_url('subject/add_subject_instance'); ?>",
+					method: "POST",
+					data: {'semester':semester, 'idSubject':code},
+					success:function(){
+						location.reload();
+					}
+				});
+			}
+
+		}
+
+		)
+	});
+
+	function to_students(index)
+	{
+		$subject_id = $("#id"+index).val();
+		$.ajax({
+			url: "<?php echo base_url('student/index'); ?>",
+			method: "POST",
+			data: {'subject_id': subject_id},
+			success:function(){}
+			}
+		})
+	}
+
+
+	
+</script>
 </body>
 </html>
