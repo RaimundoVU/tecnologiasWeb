@@ -65,45 +65,193 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	</style>
 </head>
-<body>
-
+<body id="student_body">
 <div id="container">
-	<h1>Módulo Usuarios</h1>
-
+	<h1>Módulo Estudiantes</h1>
+	<div>
+		<button class="btn btn-primary" onclick="mostrarModal()">Agregar estudiante</button>
+	</div>
 	<div id="body">
-	<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+		<div id="listado">
+			<table class="table">
+				<th>Matricula</th>
+				<th>Nombre</th>
+				<th>Apellido Paterno</th>
+				<th>Apellido Materno</th>
+				<th></th>
+				<?$i=0;foreach($resultado as $row):?>
+					<tr>
+						<td>
+							<input type="hidden" id="a<?=$i?>" value=<?="$row->matricula"?> readonly>
+							<p><?=$row->matricula?></p>
+						</td>
+						<td>
+							<input type="hidden" id="b<?=$i?>" value=<?="$row->nombre"?> readonly>
+							<p><?=$row->nombre?></p>
+						</td>
+						<td>
+							<input type="hidden" id="c<?=$i?>" value=<?="$row->apellido_paterno"?> readonly>
+							<p><?=$row->apellido_paterno?></p>
+						</td>
+						<td>
+							<input type="hidden" id="d<?=$i?>" value=<?="$row->apellido_materno"?> readonly>
+							<p><?=$row->apellido_materno?></p>
+						</td>
+						<td><button class="btn btn-info" onclick="editar(<?=$i?>)">Editar</button></td>
+					</tr>
+				<?$i++;endforeach;?>
+			</table>
+		</div>
 	</div>
 
 </div>
 
 </body>
+
+<div id="student_modal" style="display: none;" class="modal" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5>Registrar usuario</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-signin">
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="matricula" name="matricula" placeholder="Matricula" 	
+					value="<?php echo set_value('matricula'); ?>">
+				</div> 
+				<div class="form-group">
+					<input type="text" class="form-control" id="nombre_estudiante" placeholder="Nombre Estudiante" name="nombre_estudiante"
+					value="<?php echo set_value('nombre_estudiante'); ?>">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="apellido_p" placeholder="Apellido Paterno" name="apellido paterno"
+					value="<?php echo set_value('apellido_p'); ?>">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="apellido_m" placeholder="Apellido Materno" name="apellido materno"
+					value="<?php echo set_value('apellido_m'); ?>">
+				</div>             
+            </div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<button class="btn btn-success" onclick="save_student()" id="upload">Guardar Estudiante</button>
+			</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+<div id="edit_student_modal" style="display: none;" class="modal" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5>Editar</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-signin">
+					
+					<div class="form-group">
+						<label for="matriculaEdit">Matricula</label>
+						<input class="form-control" type="text" placeholder="" id="matriculaEdit" readonly>
+					</div>
+					
+					<div class="form-group">
+						<label for="nombreEdit">Nombre</label>
+						<input class="form-control" type="text" id="nombreEdit">
+					</div>
+					
+					<div class="form-group">
+						<label for="apellidoPEdit">Apellido Paterno</label>
+						<input class="form-control" type="text" id="apellidoPEdit">
+
+					</div>
+					
+					<div class="form-group">
+						<label for="apellidoMEdit">Apellido Materno</label>
+						<input class="form-control" type="text" id="apellidoMEdit">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+				<button class="btn btn-success" onclick="guardarCambios()">Guardar</button>
+			</div>
+		</div>
+	</div>	
+</div>
+
+<script type="text/javascript">
+var base_url = '<? echo base_url()?>'
+function reload_view(){
+	$.post(
+		base_url+"students/reload_view",
+		{},
+		function(url,data){
+			$("#container").html(url,data);
+		}
+	)
+}
+function mostrarModal(){
+		$("#student_modal").modal('show');
+	}
+function save_student() {
+	var matricula = $("#matricula").val();
+	var nombre_estudiante = $("#nombre_estudiante").val();
+	var apellido_p 	= $("#apellido_p").val();
+	var apellido_m = $("#apellido_m").val();
+	$.post (
+		base_url+"students/add_student",
+		{
+			matricula:matricula,
+			nombre:nombre_estudiante,
+			apellido_p:apellido_p,
+			apellido_m:apellido_m,
+		},function(){
+			$("#student_modal").modal('hide');
+			$("#container").hide('slow');
+			reload_view();
+			$("#container").show('slow');
+		}
+	)
+}
+
+function editar(indice){
+		
+		$("#matriculaEdit").val($("#a"+indice).val());
+		$("#nombreEdit").val($("#b"+indice).val());
+		$("#apellidoPEdit").val($("#c"+indice).val());
+		$("#apellidoMEdit").val($("#d"+indice).val());
+		$("#edit_student_modal").modal('show');
+}
+
+function guardarCambios(){
+	var matricula 			= $("#matriculaEdit").val();
+	var nombre				= $("#nombreEdit").val();
+	var apellido_paterno 	= $("#apellidoPEdit").val();
+	var apellido_materno	= $("#apellidoMEdit").val();
+	$.post (
+		base_url+"students/update_student",
+		{
+			matricula: matricula,
+			nombre: nombre,
+			apellido_paterno: apellido_paterno,
+			apellido_materno: apellido_materno,
+		},function(){
+			$("#edit_student_modal").modal('hide');
+			$("#container").hide('slow');
+			reload_view();
+			$("#container").show('slow');
+		}
+	)
+}
+
+</script>
 </html>
