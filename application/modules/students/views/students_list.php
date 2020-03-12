@@ -217,8 +217,8 @@ function save_student() {
 		},function(){
 			$("#student_modal").modal('hide');
 			$("#container").hide('slow');
-			reload_view();
 			$("#container").show('slow');
+			location.reload();
 		}
 	)
 }
