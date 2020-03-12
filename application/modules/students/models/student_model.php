@@ -72,6 +72,20 @@ class Student_model extends CI_Model {
     $this->db->where('matricula', $matricula);
     $this->db->update('estudiante', $data);
   }
+  
+  public function get_students_in_subject($id_ins)
+  {
+    $query = $this->db->get_where('asignatura_estudiante', [
+      'id_instancia_asignatura' => $id_ins
+    ]);
+    if ($query->num_rows() > 0) {
+      foreach ($query->result() as $row) {
+        $data[] = $row;
+      }
+      return $data;
+    }
+    return;
+  }
 
 }
 

@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class students extends MY_Controller {
 
-	
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,7 +12,8 @@ class students extends MY_Controller {
 	public function index()
 	{
 		//$this->load->view('users_list');
-		$data['resultado'] = $this->list_all();
+		$data['subject_id'] = $this->input->post('subject_id');
+		$data['resultado'] = $this->get_students_in_subject($data['subject_id']);
 		$this->render_page('students_list', $data);
 	}
 
@@ -81,8 +81,18 @@ class students extends MY_Controller {
 			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
 			return;
 		}
-		
-		
-	
+	}
+
+	public function get_students_in_subject($subject_id)
+	{
+		header('Content-type: application/json');
+		try {
+			$this->student_model->get_students_in_subject($subject_id);
+			echo json_encode(['ok'=>true]);
+			return;
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}		
 	}
 }
