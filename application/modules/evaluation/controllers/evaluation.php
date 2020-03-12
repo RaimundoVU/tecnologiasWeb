@@ -7,7 +7,7 @@ class evaluation extends MY_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		//$this->idSubject = $this->input->get('idSubject');
+		$this->idSubject = $this->input->get('idSubject');
 		$this->load->model("evaluationModel");
 	}
 
@@ -19,5 +19,12 @@ class evaluation extends MY_Controller {
 	public function getEvaluations(){
 	 	$data['evaluations'] = $this->evaluationModel->getEvaluations(1);
 		return $this->load->view('evaluationsTable',$data);
+	}
+
+	public function save(){
+		$title = $this->input->post("title");
+		$description = $this->input->post("description");
+		$date = $this->input->post("date");
+		$this->evaluationModel->saveEvaluation($title, $description, $date, $this->idSubject);
 	}
 }

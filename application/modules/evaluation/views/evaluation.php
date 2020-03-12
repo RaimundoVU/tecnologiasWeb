@@ -22,21 +22,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div>
 					<div>
 						<label>Título</label>
-						<input type="text" class="form-control">
+						<input type="text" id="title" class="form-control">
 					</div>
 					<div>
 						<label>Descripción</label>
-						<input type="text" class="form-control">
+						<input type="text" id="description" class="form-control">
 					</div>
 					<div>
 						<div class="form-group">
 							<label> Fecha </label>
-							<div class='input-group date' id='datetimepicker1'>
-								<input type='text' class="form-control" />
-								<span class="input-group-addon">
-									<span>Click</span>
-								</span>
-							</div>
+							<input type='date' id="date" class="form-control" />
 						</div>
 					</div>
 					
@@ -44,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Agregar</button>
+				<button type="button" onclick="saveEvaluation()" class="btn btn-primary">Agregar</button>
 			</div>
 		</div>
 	</div>
@@ -61,7 +56,17 @@ const site_url = '<?php echo  base_url(); ?>';
             $('#evaluations-table').html(url, data);
         });
     }
-	$(function() {
-		$('#datetimepicker1').datetimepicker();
-	});
+	function saveEvaluation(){
+		var title = $("#title").val();
+    	var description = $("#description").val();
+    	var date = $("#date").val();
+		$.post(site_url + "/evaluation/save", {
+			title:  title,
+			description: description,
+			date: date
+		}, function() {
+			load_data();
+		});
+	}
+    
 </script>
