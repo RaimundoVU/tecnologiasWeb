@@ -79,6 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th>Apellido Paterno</th>
 				<th>Apellido Materno</th>
 				<th></th>
+				<input type="hidden" id="id_asig" value=<?="$id_asig"?> readonly>
 				<?$i=0;foreach($resultado as $row):?>
 					<tr>
 						<td>
@@ -203,6 +204,7 @@ function mostrarModal(){
 		$("#student_modal").modal('show');
 	}
 function save_student() {
+	let subject_id = $("#id_asig").val();
 	var matricula = $("#matricula").val();
 	var nombre_estudiante = $("#nombre_estudiante").val();
 	var apellido_p 	= $("#apellido_p").val();
@@ -214,11 +216,12 @@ function save_student() {
 			nombre:nombre_estudiante,
 			apellido_p:apellido_p,
 			apellido_m:apellido_m,
+			subject_id:subject_id
 		},function(){
 			$("#student_modal").modal('hide');
 			$("#container").hide('slow');
-			reload_view();
 			$("#container").show('slow');
+			location.reload();
 		}
 	)
 }

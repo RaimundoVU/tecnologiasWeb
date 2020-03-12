@@ -9,6 +9,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <title>Tecnologías web - Proyecto</title>
   <script type="text/javascript" src="<?= base_url('../js/jquery-3.4.1.js'); ?>"></script>
   <script type="text/javascript" src="<?= base_url() ?>../js/bs/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="<?= base_url() ?>../css/bs/bootstrap.css">
 </head>
 <style type="text/css">
