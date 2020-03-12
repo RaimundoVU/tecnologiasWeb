@@ -79,7 +79,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th>Apellido Paterno</th>
 				<th>Apellido Materno</th>
 				<th></th>
-				<th></th>
 				<?$i=0;foreach($resultado as $row):?>
 					<tr>
 						<td>
@@ -98,8 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<input type="hidden" id="d<?=$i?>" value=<?="$row->apellido_materno"?> readonly>
 							<p><?=$row->apellido_materno?></p>
 						</td>
-						<td><button class="btn btn-secondary" onclick="editar(<?=$i?>)">Editar</button></td>
-						<td><button class="btn btn-danger" onclick="eliminar(<?=$i?>)">Eliminar</button></td>
+						<td><button class="btn btn-info" onclick="editar(<?=$i?>)">Editar</button></td>
 					</tr>
 				<?$i++;endforeach;?>
 			</table>
@@ -177,7 +175,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					
 					<div class="form-group">
-						<label for="apellidoMEdit">telefono</label>
+						<label for="apellidoMEdit">Apellido Materno</label>
 						<input class="form-control" type="text" id="apellidoMEdit">
 					</div>
 				</div>
