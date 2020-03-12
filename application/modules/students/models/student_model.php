@@ -67,6 +67,12 @@ class Student_model extends CI_Model {
     return $count === 0;
   }
 
+  public function update_student($matricula, $data)
+  {
+    $this->db->where('matricula', $matricula);
+    $this->db->update('estudiante', $data);
+  }
+
 }
 
 /* End of file User_model.php */

@@ -63,4 +63,26 @@ class students extends MY_Controller {
 		echo json_encode(['ok'=>false]);
 		return;
 	}
+
+	public function update_student()
+	{
+		header('Content-type: application/json');
+		$matricula = $this->input->post('matricula');
+		$data = [
+			'nombre' => $this->input->post('nombre'),
+			'apellido_paterno' => $this->input->post('apellido_paterno'),
+			'apellido_materno' => $this->input->post('apellido_materno')
+		];
+		try {
+			$this->student_model->update_student($matricula, $data);
+			echo json_encode(['ok'=>true]);
+			return;
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}
+		
+		
+	
+	}
 }
