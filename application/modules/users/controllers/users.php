@@ -65,5 +65,6 @@ class users extends MY_Controller {
 		$data['users'] = $this->user_model->get_all();
 		return $this->render_page('users_list', $data);
 	}
+
 	
 }

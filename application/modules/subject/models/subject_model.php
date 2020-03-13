@@ -19,9 +19,10 @@ class Subject_model extends CI_Model{
         return $this->db->get('asignatura')->result();
     }
 
-    public function add($name )
+    public function add($code,$name)
     {
         $data['nombre'] = $name;
+        $data['codigo'] = $code;
         $this->db->insert('asignatura',$data);
     }
 
