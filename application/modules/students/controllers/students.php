@@ -47,6 +47,7 @@ class students extends MY_Controller {
 		{
 			$this->student_model->add_student($data);
 			$this->add_student_in_subject($this->input->post('subject_id'), $data['matricula']);
+			$this->student_model->add_nota($this->input->post('subject_id'), $data['matricula']);
 			echo json_encode( array('ok' => true) );
 			return;
 		}
@@ -72,7 +73,6 @@ class students extends MY_Controller {
 
 	public function update_student()
 	{
-		header('Content-type: application/json');
 		$matricula = $this->input->post('matricula');
 		$data = [
 			'nombre' => $this->input->post('nombre'),

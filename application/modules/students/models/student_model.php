@@ -57,6 +57,35 @@ class Student_model extends CI_Model {
     $count = $query->num_rows();
     return $count === 0;
   }
+  public function check_evaluation($id_subject)
+  {
+    $query = $this->db->get_where('evaluacion', array(
+      'id_ins_asignatura' => $id_subject
+    ));
+    $count = $query->num_rows();
+    return $count === 0;
+  }
+  public function add_nota($id_subject, $matricula){
+    $this->db->select('*');
+    $this->db->from('evaluacion');
+    $this->db->where('id_ins_asignatura', $id_subject);var_dump('hola1');
+
+    $query = $this->db->get();    
+    if ($query->num_rows() > 0) {
+      var_dump('igggg');
+      foreach ($query->result() as $row) {
+        var_dump('hola');
+        $data = [
+          'observacion' => '',
+          'valor' => 0,
+          'matricula_estudiante' => $matricula,
+          'id_evaluacion' => $row->id_evaluacion
+        ];
+        $this->db->insert('nota', $data);
+      }
+    }
+    
+  }
   public function check_student_in_subject($data)
   {
     $query = $this->db->get_where('asignatura_estudiante', [
