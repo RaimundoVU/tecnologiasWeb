@@ -8,9 +8,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <meta charset="utf-8">
   <title>Tecnologías web - Proyecto</title>
   <script type="text/javascript" src="<?= base_url('js/jquery-3.4.1.js'); ?>"></script>
-  <script type="text/javascript" src="<?= base_url() ?>/js/bs/bootstrap.min.js"></script>
+  <script type="text/javascript" src="<?= base_url() ?>js/bs/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/bs/bootstrap.css">
   <script defer src="<?= base_url()?>/fontawesome/js/all.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/css/bs/bootstrap.css">
 </head>
 <style type="text/css">
 	
@@ -84,10 +86,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</ul>
 	<div class="dropdown">
 	<button class="dropdown-toggle btn-primary btn" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Perfil
+		  Perfil
+		  <i class="fas fa-user"></i>
 	</button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Cerrar sesión</a>
+          <a class="dropdown-item" href="#">Cerrar sesión
+			  <i class="fas fa-sign-out-alt"></i>
+		  </a>
         </div>
 	</div>
   </div>

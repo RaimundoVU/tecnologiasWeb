@@ -22,7 +22,7 @@ class Login extends MY_Controller {
 					break;
 				case 3:
 					//usuario 3
-					redirect(base_url()."cambio3");
+					redirect(base_url()."subject");
 					break;
 			}			
 		}

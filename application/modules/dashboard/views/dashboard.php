@@ -17,10 +17,10 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <b>Usuarios</b>
-                         <button class="btn btn-sm btn-danger float-right">
-                             Editar
-                             <i class="fas fa-user-edit"></i>
-                            </button>
+                        <a class="btn btn-sm btn-warning float-right" href="<?=base_url()?>index.php/users">
+                            Editar
+                            <i class="fas fa-user-edit"></i>
+                        </a>
                     </h5>
                     <p class="card-text">
                         <ul>
@@ -36,23 +36,23 @@
         </div>
 
         <div class="d-flex align-items-center flex-row flex-wrap">
-            <? foreach ($sections as $section) : ?>
+            <? foreach ($instances as $instance) : ?>
                 <div class="card section align-self-start ">
                     <div class="card-body">
-                        <h5 class="card-title"><b><?= $section ?></b></h5>
+                        <h5 class="card-title"><b><?= $instance->nombre ?></b></h5>
                         <p class="card-text">
-                            <b>2019-2 v2</b>
+                            <b><?= $instance->anho . "-" . $instance->semestre ?></b>
                             <ul class="card-data">
                                 <li>
-                                    <b>Profesor:</b> Dieguito Maradona
+                                    <b>Profesor:</b> <?= $instance->nombres . " " . $instance->apellido_paterno . " " . $instance->apellido_materno ?>
 
                                 </li>
-                                <li>
+                                <!--<li>
                                     <b>Alumnos:</b> 37
-                                </li>
+                                </li>-->
                             </ul>
                         </p>
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end align-items-end">
                             <button class="btn btn-primary">
                                 Ver asignatura
                                 <i class="fas fa-chalkboard-teacher"></i>
@@ -76,8 +76,8 @@
     }
 
     .card.section {
-        width: 30%;
-        height: 210px;
+        width: 300px;
+        min-height: 210px;
     }
 
     ul.card-data {
