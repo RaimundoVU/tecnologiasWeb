@@ -24,7 +24,8 @@ class Subject extends MY_Controller {
 				break;
 
 			case 2:
-
+				$data['subjects'] = $this->subject_model->get_all();
+				$this->render_page('subject_list_admin',$data);
 				break;
 
 			case 3:
@@ -72,6 +73,20 @@ class Subject extends MY_Controller {
         echo json_encode($returnData);
 	}
 
+	public function edit_subject()
+	{
+		$id = $this->input->post('code');
+		$name = $this->input->post('name');
+		$this->subject_model->update($id,$name);
+	}
+
+	public function add_subject()
+	{
+		$code_subject = $this->input->post("code");
+		$name_subject = $this->input->post("name");
+		$this->subject_model->add($code_subject,$name_subject);
+	}
+
 	public function add_subject_instance()
 	{
 		$idSubject = $this->input->post("idSubject");
@@ -80,6 +95,7 @@ class Subject extends MY_Controller {
 		$year = date('Y');
 		$this->subject_instance_model->add($idSubject,$semester,$idUser,$year);
 	}
+
 
 	
 	
