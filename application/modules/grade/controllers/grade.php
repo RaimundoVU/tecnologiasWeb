@@ -19,9 +19,22 @@ class grade extends MY_Controller {
 	}
 
 	public function getGrades($id){
-	
+		echo $id;
 	 	$data['grades'] = $this->gradeModel->getGrades($id);
-		return $this->load->view('estudentsTable',$data);
+		return $this->load->view('gradeTable',$data);
+	}
+
+	public function evaluationInfo($id) {
+		$data['ev'] = $this->gradeModel->getEvaluation($id);
+		return $this->load->view('evaluationInfo',$data);
+	}
+
+	public function editGrade() {
+		$grade = $this->input->post("grade");
+		$obs = $this->input->post("obs");
+		$matricula = $this->input->post("matricula");
+		$evId = $this->data->id; 
+		return $this->gradeModel->updateGrade($grade, $obs, $matricula, $evId);
 	}
 
 }

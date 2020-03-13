@@ -8,12 +8,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <div class="container">
-<h2> Notas </h2>
- <div>AGREGAR INFO DE LA EVALUACION EN ALGUNA CARD</div>
-	
-	<div id="grade-table">
 
-	</div>
+	<div id="evaluation-info"></div>
+	<h4> Notas </h4>
+	<div id="grade-table"></div>
 </div>
 
 
@@ -21,11 +19,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <script type="text/javascript">
 	const site_url = '<?php echo  base_url(); ?>';
+	loadEvaluationInfo();
 	load_data();
 
 	function load_data() {
 		$.get(site_url + "grade/getGrades/<?php echo $id ?>", function(url, data) {
 			$('#grade-table').html(url, data);
+		});
+	}
+
+	function loadEvaluationInfo(){
+		$.get(site_url + "grade/evaluationInfo/<?php echo $id ?>", function(url, data) {
+			$('#evaluation-info').html(url, data);
 		});
 	}
 

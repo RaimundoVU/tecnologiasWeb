@@ -3,7 +3,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">Fecha</th>
-                <th scope="col">Título</th>
+                <th scope="col">Tópico</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Notas</th>
@@ -15,20 +15,20 @@
             <tr>
                 <td>
                     <?= $ev->fecha ?>
-					<input id="fecha_<?= $ev->codigo_evaluacion?>" type="hidden" readonly value="<?= $ev->fecha?>">
+					<input id="fecha_<?= $ev->id_evaluacion?>" type="hidden" readonly value="<?= $ev->fecha?>">
                 </td>
                 <td>
-                    <?= $ev->titulo ?>
-					<input id="titulo_<?= $ev->codigo_evaluacion?>" type="hidden" readonly value="<?= $ev->titulo?>">
+                    <?= $ev->topico?>
+					<input id="topico_<?= $ev->id_evaluacion?>" type="hidden" readonly value="<?= $ev->topico?>">
                 <td>
                     <?= $ev->descripcion ?>
-					<input id="descripcion_<?= $ev->codigo_evaluacion?>" type="hidden" readonly value="<?= $ev->descripcion?>">
+					<input id="descripcion_<?= $ev->id_evaluacion?>" type="hidden" readonly value="<?= $ev->descripcion?>">
                 </td>
                 <td>
-                    <button class="btn btn-secundary" onclick="openModalEdit(<?= $ev->codigo_evaluacion ?>)">Editar</button>
+                    <button class="btn btn-secundary" onclick="openModalEdit(<?= $ev->id_evaluacion ?>)">Editar</button>
                 </td>
                 <td>
-                    <button class="btn btn-primary">Asignar</button>
+                    <button class="btn btn-primary" onclick="openGrade(<?= $ev->id_evaluacion?>)">Asignar</button>
                 </td>
             </tr>
             <?endforeach; ?>
@@ -49,7 +49,7 @@
 				<div class="modal-body">
 					<div>
 						<div>
-							<label>Título</label>
+							<label>Tópico</label>
                             <input type="text" id="editTitle" class="form-control">
                             <input id="idEdit" type="hidden" readonly value="">
 						</div>
@@ -68,7 +68,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Cerrar</button>
-					<button type="button" onclick="updateEvaluation()" class="btn btn-primary">Editarr</button>
+					<button type="button" onclick="updateEvaluation()" class="btn btn-primary">Editar</button>
 				</div>
 			</div>
 		</div>
@@ -76,12 +76,16 @@
     
 <script type="text/javascript">
     function openModalEdit(id){
-        $("#editTitle").val($("#titulo_"+id).val());
+        $("#editTitle").val($("#topico_"+id).val());
         $("#editDescription").val($("#descripcion_"+id).val());
         $("#editDate").val($("#fecha_"+id).val());
         $("#idEdit").val(id);
 
         $(".editModal").modal("show");
+    }
+
+    function openGrade(id) {
+        window.location.replace(site_url + "grade/evaluation/"+ id);
     }
 
     function updateEvaluation(){

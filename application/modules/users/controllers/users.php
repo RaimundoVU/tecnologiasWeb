@@ -66,9 +66,5 @@ class users extends MY_Controller {
 		return $this->render_page('users_list', $data);
 	}
 
-	public function open() {
-		
-		redirect(base_url()."evaluation/ev/1");
-	}
 	
 }

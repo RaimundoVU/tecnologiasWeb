@@ -22,8 +22,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $('#users-table').html(url, data);
         });
     }
-    function hola() {
-        window.location.replace(site_url + "../users/open");
-        
-    }
 </script>
