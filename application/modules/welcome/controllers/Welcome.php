@@ -20,7 +20,7 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		redirect(base_url()."login");
+		redirect(base_url()."index.php/login");
 	}
 
 	public function json() { 
