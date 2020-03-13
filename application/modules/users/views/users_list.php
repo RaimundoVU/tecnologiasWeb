@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+    <button onclick="hola()">hola</button>
 	<div id="container">
 		<h1>Módulo Usuarios</h1>
 
@@ -20,5 +21,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $.get(site_url + "/users/list_all",function(url, data){
             $('#users-table').html(url, data);
         });
+    }
+    function hola() {
+        window.location.replace(site_url + "../users/open");
+        
     }
 </script>
