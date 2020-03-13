@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class students extends MY_Controller {
 
-	
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,6 +13,12 @@ class students extends MY_Controller {
 	{
 		//$this->load->view('users_list');
 		$data['resultado'] = $this->list_all();
+		$this->render_page('students_list', $data);
+	}
+
+	public function subject($id_asig){
+		$data['id_asig'] = $id_asig;
+		$data['resultado'] = $this->get_students_in_subject($id_asig);
 		$this->render_page('students_list', $data);
 	}
 
@@ -39,7 +44,8 @@ class students extends MY_Controller {
 		);
 		if ($this->student_model->check($this->input->post('matricula'))) 
 		{
-			$this->student_model->add_student($data);		
+			$this->student_model->add_student($data);
+			$this->add_student_in_subject($this->input->post('subject_id'), $data['matricula']);
 			echo json_encode( array('ok' => true) );
 			return;
 		}
@@ -47,12 +53,11 @@ class students extends MY_Controller {
 		return;
 	}
 
-	public function add_student_in_subject()
+	public function add_student_in_subject($id_asig, $matricula)
 	{
-		header('Content-type: application/json');
 		$data = [
-			'id_estudiante' => $this->input->post('matricula'),
-			'id_instancia_asignatura' => $this->input->post('id_ins_asig')
+			'id_estudiante' => $matricula,
+			'id_instancia_asignatura' => $id_asig
 		];
 
 		if ($this->student_model->check_student_in_subject($data)) {
@@ -62,5 +67,34 @@ class students extends MY_Controller {
 		}
 		echo json_encode(['ok'=>false]);
 		return;
+	}
+
+	public function update_student()
+	{
+		header('Content-type: application/json');
+		$matricula = $this->input->post('matricula');
+		$data = [
+			'nombre' => $this->input->post('nombre'),
+			'apellido_paterno' => $this->input->post('apellido_paterno'),
+			'apellido_materno' => $this->input->post('apellido_materno')
+		];
+		try {
+			$this->student_model->update_student($matricula, $data);
+			echo json_encode(['ok'=>true]);
+			return;
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}
+	}
+
+	public function get_students_in_subject($subject_id)
+	{
+		try {
+			return $this->student_model->get_students_in_subject($subject_id);	
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}		
 	}
 }
