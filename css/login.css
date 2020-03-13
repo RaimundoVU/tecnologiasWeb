@@ -1,0 +1,12 @@
+#btnLogin{
+    margin-top: 20px;
+    width: 100%;
+}
+.card-header{
+    text-align: center;
+    background-color: white;
+}
+body {
+    background-image: url("../assets/fondo.jpg");
+}
+
