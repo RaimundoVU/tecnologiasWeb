@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script type="text/javascript">
-    const site_url = '<?php echo  site_url(); ?>';
+    const site_url = '<?php echo  base_url(); ?>';
     load_data();
     function load_data(){
         $.get(site_url + "/users/list_all",function(url, data){
