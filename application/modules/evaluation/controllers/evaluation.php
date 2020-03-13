@@ -29,7 +29,8 @@ class evaluation extends MY_Controller {
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
 		$date = $this->input->post("date");
-		return $this->evaluationModel->saveEvaluation($title, $description, $date,1);
+		$idSubject = $this->input->post("idSubject");
+		return $this->evaluationModel->saveEvaluation($title, $description, $date,$idSubject);
 	}
 
 	public function update(){

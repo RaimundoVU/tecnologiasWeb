@@ -19,11 +19,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <script type="text/javascript">
 	const site_url = '<?php echo  base_url(); ?>';
+	var idEvaluation = <?php echo $id ?>;
+	var idSubject = <?php echo $idSubject ?>;
 	loadEvaluationInfo();
 	load_data();
-
 	function load_data() {
-		$.get(site_url + "grade/getGrades/<?php echo $id ?>", function(url, data) {
+		$.get(site_url + "grade/getGrades/<?php echo $id ?>/"+idSubject, function(url, data) {
 			$('#grade-table').html(url, data);
 		});
 	}
@@ -42,11 +43,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		$.post(site_url + "evaluation/save", {
 			title: title,
 			description: description,
-			date: date
+			date: date,
+			idEvaluation: idEvaluation
 		}, function() {
 			$(".evModal").modal('hide');
 			load_data();
-            reload_view();
+            location.reload(true);
 		});
 	}
 </script>

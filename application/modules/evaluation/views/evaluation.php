@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script type="text/javascript">
 	const site_url = '<?php echo  base_url(); ?>';
 	load_data();
-
+	var idSubject = <?php echo $id ?>;
 	function load_data() {
 		$.get(site_url + "evaluation/getEvaluations/<?php echo $id ?>", function(url, data) {
 			$('#evaluations-table').html(url, data);
@@ -72,11 +72,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		$.post(site_url + "evaluation/save", {
 			title: title,
 			description: description,
-			date: date
+			date: date,
+			idSubject: idSubject
 		}, function() {
-			$(".evModal").modal('hide');
 			load_data();
-            reload_view();
+            location.reload(true);
 		});
 	}
 </script>

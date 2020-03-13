@@ -85,7 +85,7 @@
     }
 
     function openGrade(id) {
-        window.location.replace(site_url + "grade/evaluation/"+ id);
+        window.location.replace(site_url + "grade/evaluation/"+ id +"/"+ idSubject);
     }
 
     function updateEvaluation(){
@@ -101,7 +101,7 @@
 		}, function() {
 			$(".editModal").modal('hide');
             load_data();
-            reload_view();
+            location.reload(true);
 		});
     }
 </script>

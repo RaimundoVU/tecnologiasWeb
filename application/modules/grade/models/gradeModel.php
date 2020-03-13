@@ -1,12 +1,11 @@
 <?php
 class gradeModel extends CI_Model{
 
-    function getGrades($idEvaluation) {
+    function getGrades($idEvaluation, $idSubject) {
         $query= "SELECT matricula, nombre, apellido_paterno, apellido_materno, valor, observacion FROM nota, estudiante WHERE id_evaluacion= ".$idEvaluation." AND estudiante.matricula = nota.matricula_estudiante";
         $result = $this->db->query($query);
-        echo $result->num_rows();
         if ( $result->num_rows() == 0) {
-            $queryStudents = "SELECT * FROM asignatura_estudiante WHERE id_instancia_asignatura = 1";
+            $queryStudents = "SELECT * FROM asignatura_estudiante WHERE id_instancia_asignatura = ".$idSubject;
             $students = $this->db->query($queryStudents)->result();
             foreach($students as $student) {
                 $addStudentQuery = "INSERT INTO nota (observacion, valor, matricula_estudiante, id_evaluacion) VALUES ('',0,'".$student->id_estudiante."',".$idEvaluation.")";

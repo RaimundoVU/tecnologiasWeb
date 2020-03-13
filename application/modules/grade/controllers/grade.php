@@ -10,17 +10,16 @@ class grade extends MY_Controller {
 
 	public function index()
 	{	
-		$this->render_page('grade');
 	}
 
-	public function evaluation($id) {
+	public function evaluation($id, $idSubject) {
 		$data['id'] = $id;
+		$data['idSubject'] = $idSubject;
 		$this->render_page('grade', $data);
 	}
 
-	public function getGrades($id){
-		echo $id;
-	 	$data['grades'] = $this->gradeModel->getGrades($id);
+	public function getGrades($id, $idSubject){
+	 	$data['grades'] = $this->gradeModel->getGrades($id, $idSubject);
 		return $this->load->view('gradeTable',$data);
 	}
 
@@ -33,7 +32,7 @@ class grade extends MY_Controller {
 		$grade = $this->input->post("grade");
 		$obs = $this->input->post("obs");
 		$matricula = $this->input->post("matricula");
-		$evId = $this->data->id; 
+		$evId = $this->input->post("idEvaluation"); 
 		return $this->gradeModel->updateGrade($grade, $obs, $matricula, $evId);
 	}
 
