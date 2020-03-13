@@ -148,7 +148,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<? echo $row->codigo?></td>
 	<td><? echo $row->nombre ?></td>
 	<td><? echo $row->anho?>-<? echo $row->semestre?></td>
-	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> <button class="btn btn-primary">Evaluaciones</button> 
+	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> 
+	<button class="btn btn-primary" onclick="openEvaluation(<?=$row->id?>)">Evaluaciones</button> 
 	</tr>
 	<?$i++;endforeach;?>
   </tbody>
@@ -201,6 +202,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	{
 		let subject_id = $("#id"+index).val();
 		window.location.replace("<?php echo base_url('students/subject/'); ?>" + subject_id);	
+	}
+
+	function openEvaluation(id) {
+		window.location.replace("<?php echo base_url('evaluation/ev/'); ?>" + id);	
 	}
 
 
