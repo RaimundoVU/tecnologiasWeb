@@ -12,6 +12,7 @@ class students extends MY_Controller {
 	public function index()
 	{
 		//$this->load->view('users_list');
+		$data['id_asig'] = 0;
 		$data['resultado'] = $this->list_all();
 		$this->render_page('students_list', $data);
 	}
