@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5>Registrar usuario</h5>
+				<h5>Registrar estudiante</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           			<span aria-hidden="true">&times;</span>
         		</button>
@@ -220,8 +220,8 @@ function save_student() {
 		},function(){
 			$("#student_modal").modal('hide');
 			$("#container").hide('slow');
-			$("#container").show('slow');
 			location.reload();
+			$("#container").show('slow');	
 		}
 	)
 }
@@ -250,7 +250,7 @@ function guardarCambios(){
 		},function(){
 			$("#edit_student_modal").modal('hide');
 			$("#container").hide('slow');
-			reload_view();
+			location.reload();
 			$("#container").show('slow');
 		}
 	)
