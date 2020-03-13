@@ -6,118 +6,86 @@ USE proyecto_tw;
 
 CREATE TABLE asignatura(
 
-codigo INTEGER PRIMARY KEY,
-nombre VARCHAR(50)
+	id INTEGER PRIMARY KEY,
+	nombre VARCHAR(50) NOT NULL,
+	codigo VARCHAR(50) NOT NULL
 
 );
-
-
-CREATE TABLE instancia_asignatura(
-
-codigo_asignatura INTEGER NOT NULL,
-fecha_creacion DATE NOT NULL
-
-
-
-);
-
 
 
 CREATE TABLE estudiante(
-
-matricula INTEGER PRIMARY KEY,
-nombre VARCHAR(40) NOT NULL,
-apellido_materno VARCHAR(40),
-apellido_paterno VARCHAR(40),
-codigo_asignatura INTEGER NOT NULL
-
+	matricula INTEGER PRIMARY KEY,
+	nombre VARCHAR(40) NOT NULL,
+	apellido_materno VARCHAR(40),
+	apellido_paterno VARCHAR(40)
 
 );
 
 CREATE TABLE usuario(
 
-id_usuario INTEGER PRIMARY KEY,
-email VARCHAR(40) NOT NULL,
-nombres VARCHAR (82) NOT NULL
-apellido_materno VARCHAR(40) NOT NULL,
-apellido_paterno VARCHAR(40) NOT NULL,
-clave VARCHAR(20) NOT NULL,
-tipo INTEGER NOT NULL
+	id_usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(40) NOT NULL,
+	nombres VARCHAR (82) NOT NULL,
+	apellido_materno VARCHAR(40) NOT NULL,
+	apellido_paterno VARCHAR(40) NOT NULL,
+	clave VARCHAR(20) NOT NULL,
+	tipo INTEGER NOT NULL
 
 
 );
-
-
-CREATE TABLE asignatura_usuario(
-
-	id_usuario INTEGER NOT NULL,
-	codigo_asignatura INTEGER NOT NULL
-
-);
-
 
 CREATE TABLE directorio(
 
-codigo_directorio INTEGER PRIMARY KEY,
-codigo_asignatura INTEGER NOT NULL,
-ruta VARCHAR(150) NOT NULL
+	codigo_directorio INTEGER PRIMARY KEY,
+	id_asignatura INTEGER NOT NULL,
+	ruta VARCHAR(150) NOT NULL
+);
 
+CREATE TABLE instancia_asignatura(
 
-
+	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	id_asignatura INTEGER NOT NULL,
+	semestre INTEGER NOT NULL,
+	anho INTEGER NOT NULL,
+	id_usuario INTEGER
 );
 
 CREATE TABLE evaluacion (
 
-codigo_evaluacion INTEGER PRIMARY KEY,
-topixo VARCHAR(50) NOT NULL,
-codigo_asignatura INTEGER NOT NULL,
-codigo_nota INTEGER NOT NULL
-
+	id_evaluacion INTEGER PRIMARY KEY AUTO_INCREMENT,
+	topico VARCHAR(50) NOT NULL,
+	fecha DATE,
+	descripcion VARCHAR(120) NOT NULL,
+	id_ins_asignatura INTEGER NOT NULL
 
 );
 
 CREATE TABLE nota(
 
-codigo_nota INTEGER PRIMARY KEY,
-observacion VARCHAR(140) NOT NULL,
-valor DECIMAL NOT NULL,
-matricula_estudiante INTEGER NOT NULL
-
-
-);
-
-
-CREATE TABLE reunion (
-
-codigo INTEGER PRIMARY KEY,
-objetivo VARCHAR(100) NOT NULL,
-numero_asistentes INTEGER NOT NULL,
-id_usuario INTEGER NOT NuLL
-
+	id_nota INTEGER PRIMARY KEY AUTO_INCREMENT,
+	observacion VARCHAR(140) NOT NULL,
+	valor DECIMAL NOT NULL,
+	matricula_estudiante INTEGER NOT NULL,
+	id_evaluacion INTEGER NOT NULL
 
 );
 
+CREATE TABLE asignatura_estudiante (
 
-CREATE TABLE estudiante_reunion(
-
-matricula_estudiante INTEGER NOT NULL,
-codigo_reunion INTEGER NOT NULL
-
-
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id_estudiante INTEGER NOT NULL,
+	id_instancia_asignatura INTEGER NOT NULL
 );
 
 
-ALTER TABLE instancia_asignatura ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE estudiante ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE asignatura_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
-ALTER TABLE asignatura_usuario ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE directorio ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE evaluacion ADD FOREIGN KEY (codigo_asignatura) REFERENCES asignatura(codigo);
-ALTER TABLE evaluacion ADD FOREIGN KEY (codigo_nota) REFERENCES nota(codigo_nota);
+ALTER TABLE instancia_asignatura ADD FOREIGN KEY (id_asignatura) REFERENCES asignatura(id);
+ALTER TABLE instancia_asignatura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
+ALTER TABLE directorio ADD FOREIGN KEY (id_asignatura) REFERENCES asignatura(id);
+ALTER TABLE evaluacion ADD FOREIGN KEY (id_ins_asignatura) REFERENCES instancia_asignatura(id);
 ALTER TABLE nota ADD FOREIGN KEY (matricula_estudiante) REFERENCES estudiante(matricula);
-ALTER TABLE reunion ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
-ALTER TABLE estudiante_reunion ADD FOREIGN KEY (matricula_estudiante) REFERENCES estudiante(matricula);
-ALTER TABLE estudiante_reunion ADD FOREIGN KEY (codigo_reunion) REFERENCES reunion(codigo);
+ALTER TABLE nota ADD FOREIGN KEY (id_evaluacion) REFERENCES  evaluacion(id_evaluacion);
+ALTER TABLE asignatura_estudiante ADD FOREIGN KEY (id_estudiante) REFERENCES estudiante(matricula);
+ALTER TABLE asignatura_estudiante ADD FOREIGN KEY (id_instancia_asignatura) REFERENCES instancia_asignatura(id);
 
 
 
