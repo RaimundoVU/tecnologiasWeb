@@ -90,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		  <i class="fas fa-user"></i>
 	</button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<?=base_url()?>login">Cerrar sesión
+          <a class="dropdown-item" href="<?=base_url()?>login/logout">Cerrar sesión
 			  <i class="fas fa-sign-out-alt"></i>
 		  </a>
         </div>

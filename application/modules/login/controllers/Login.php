@@ -44,4 +44,10 @@ class Login extends MY_Controller {
 		$this->session->set_userdata($data);
 		$this->index();
 	}
+
+	public function logout() 
+	{
+		$this->session->sess_destroy();
+		redirect('/login');
+	}
 }
