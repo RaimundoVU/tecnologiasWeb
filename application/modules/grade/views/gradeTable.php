@@ -83,11 +83,12 @@
         $.post(site_url + "grade/editGrade", {
 			grade: grade,
 			obs: obs,
-            matricula: matricula
+            matricula: matricula,
+            idEvaluation: idEvaluation
 		}, function() {
 			$(".editModal").modal('hide');
             load_data();
-            reload_view();
+            location.reload(true);
 		});
     }
 </script>
