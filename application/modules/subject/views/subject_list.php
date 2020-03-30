@@ -150,6 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<td><? echo $row->anho?>-<? echo $row->semestre?></td>
 	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> 
 	<button class="btn btn-primary" onclick="openEvaluation(<?=$row->id?>)">Evaluaciones</button> 
+	<button class="btn btn-primary" onclick="openSubject(<?=$row->id?>)">Ver</button> 
 	</tr>
 	<?$i++;endforeach;?>
   </tbody>
@@ -208,6 +209,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		window.location.replace("<?php echo base_url('evaluation/ev/'); ?>" + id);	
 	}
 
+	function openSubject(id) {
+		let subject_id = $("#id"+id).val();
+		window.location.replace("<?php echo base_url('subject/detail/'); ?>" + subject_id);	
+	}
 
 	
 </script>

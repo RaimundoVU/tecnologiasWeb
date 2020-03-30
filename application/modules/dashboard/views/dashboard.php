@@ -53,7 +53,7 @@
                             </ul>
                         </p>
                         <div class="d-flex justify-content-end align-items-end">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" onclick="openSubject(<?= $instance->id?>)">
                                 Ver asignatura
                                 <i class="fas fa-chalkboard-teacher"></i>
                             </button>
@@ -95,3 +95,10 @@
         margin: 10px;
     }
 </style>
+
+<script>
+    function openSubject(id) {
+
+        window.location.replace("<?php echo base_url('subject/subject/detail/'); ?>" + id);	
+    }
+</script>
