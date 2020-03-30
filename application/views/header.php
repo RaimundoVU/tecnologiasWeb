@@ -8,6 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <meta charset="utf-8">
   <title>Tecnologías web - Proyecto</title>
   <script type="text/javascript" src="<?= base_url('../js/jquery-3.4.1.js'); ?>"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script type="text/javascript" src="<?= base_url() ?>../js/bs/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

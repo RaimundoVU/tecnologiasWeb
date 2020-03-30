@@ -21,10 +21,17 @@ class Subject_instance_model extends CI_Model{
         return $this->db->query($sql)->result();
     }
 
+    public function get_subject($id) {
+      $query ="SELECT instancia_asignatura.anho as anho, instancia_asignatura.semestre as 
+      semestre, usuario.nombres as nombres, usuario.apellido_paterno as apellido_paterno, usuario.apellido_materno as apellido_materno, asignatura.nombre as asignatura
+       FROM instancia_asignatura, usuario,asignatura WHERE instancia_asignatura.id = '$id' AND usuario.id_usuario = instancia_asignatura.id_usuario AND instancia_asignatura.id_asignatura = asignatura.id";
+      return $this->db->query($query)->result()[0];
+    }
+
     public function get_all_instances() 
     {
 
-      $this->db->select('asignatura.nombre, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
+      $this->db->select('asignatura.nombre, instancia_asignatura.id, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
       $this->db->from('asignatura');
       $this->db->join('instancia_asignatura', 'instancia_asignatura.id_asignatura = asignatura.id');
       $this->db->join('usuario', 'instancia_asignatura.id_usuario = usuario.id_usuario');
