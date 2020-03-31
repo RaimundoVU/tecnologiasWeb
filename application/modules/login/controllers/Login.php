@@ -18,7 +18,7 @@ class Login extends MY_Controller {
 					break;
 				case 2:
 					//usuario 2
-					redirect(base_url()."cambio2");
+					redirect(base_url()."subject");
 					break;
 				case 3:
 					//usuario 3
