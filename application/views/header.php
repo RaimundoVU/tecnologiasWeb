@@ -85,6 +85,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </li>
 	</ul>
 	<div class="dropdown">
+	<? if(count($evaluationsAway)+count($evaluationsAgo)>0) :?>
+	<button class="dropdown-toggle btn-primary btn" href="#" id="reminderDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		
+			<?echo (count($evaluationsAway)+count($evaluationsAgo))?>
+		
+		<i class="fas fa-bell"></i>
+	</button>
+	<? endif; ?>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+			<?$i=0; foreach( $evaluationsAway as $row):?>
+			<a class="dropdown-item"> Evaluacion <? echo ($row->topico) ?> de  <? echo($row->nombre)?> para el <? echo ($row->fecha)?></a>
+			<?$i++;endforeach;?>
+			<?$i=0; foreach( $evaluationsAgo as $row):?>
+			<a class="dropdown-item"> Evaluacion <? echo ($row->topico) ?> de  <? echo($row->nombre)?> hecha el <? echo ($row->fecha)?></a>
+			<?$i++;endforeach;?>
+        </div>
+	</div>
+	<div class="dropdown">
 	<button class="dropdown-toggle btn-primary btn" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  Perfil
 		  <i class="fas fa-user"></i>

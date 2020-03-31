@@ -40,4 +40,13 @@ class evaluation extends MY_Controller {
 		$id = $this->input->post("idEv");
 		return $this->evaluationModel->updateEvaluation($title, $description, $date, $id);
 	}
+
+	public function getEvalutationsAway($email){
+		$data = $this->evaluationModel->getEvalutationsAway($email);
+
+	}
+
+	public function getEvaluationsAgo(){
+		$data = $this->evaluationModel->getEvaluationsAgo($email);
+	}
 }
