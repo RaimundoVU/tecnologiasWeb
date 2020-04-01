@@ -2,14 +2,19 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Subject extends MY_Controller {
-	
+	var $path;
+	var $files;
 	public function __construct(){
 		parent::__construct();
 
 		$this->load->library('session');
 		$this->load->model('subject_model');
 		$this->load->model('subject_instance_model');
-		
+		$this->load->helper('file');
+		$this->load->helper('directory');
+		$this->load->helper('download');
+		$this->path = "./filesys";
+		$this->load->library('zip');
        
     }
     
@@ -97,9 +102,73 @@ class Subject extends MY_Controller {
 	}
 
 
+	public function detail($id) {
+		
+		if (!is_dir($this->path.DIRECTORY_SEPARATOR.$id)) {
+			mkdir($this->path.DIRECTORY_SEPARATOR.$id,0777,TRUE);
+		}
+		$this->path = $this->path."/".$id;
+
+		$data['subject'] = $this->subject_instance_model->get_subject($id);
+		$data['idSubject'] = $id;
+		$data['directories'] = directory_map($this->path);
+		$data['path'] = $this->path;
+		$this->render_page('subject_view', $data);
+	}
+
+	public function getInfo() {
+		$subPath = $this->input->post("subPath");
+		$path = $this->input->post("path");
+		echo json_encode(directory_map($path.DIRECTORY_SEPARATOR.$subPath.DIRECTORY_SEPARATOR));
+	}
 	
-	
-	
+	public function createFolder() {
+		$pathFolder = $this->input->post("pathFolder");
+		$path = $this->input->post("path");
+		$folderName = $this->input->post("name");
+		if ($folderName != ""){
+			mkdir($path."/".$pathFolder."/".$folderName,0777,TRUE);
+		}
+		
+	}
+
+	public function upload() {
+		$pathInput = $this->input->post("pathInput");
+		$path = $this->input->post("principalPath");
+
+		$config['allowed_types'] = '*';
+		$config['upload_path'] = $path.DIRECTORY_SEPARATOR.$pathInput;
+		$this->load->library('upload', $config);
+		if ($this->upload->do_upload('inputFile')) {
+			$imagen = $this->upload->data('file_name');
+			$id = $this->input->post("idSubject");
+			redirect(base_url()."/subject/detail/".$id);
+		} else {
+			print_r($this->upload->display_errors());
+		}
+	}
+
+	public function downloadFile($nro) {
+		$this->load->helper('download');
+		$name ="pathFile".$nro;
+		$currentPath = $this->input->post($name);
+		$currentPath= realpath($currentPath);
+		$content= file_get_contents($currentPath);
+		force_download($currentPath, null);
+	}
+
+	public function createZip(){
+		$pathToZip = $this->input->post("pathFolderZip");
+		$name = $this->input->post("nameFolderZip");
+		$pathToZip = realpath($pathToZip);
+		$filename = $name.".zip";
+
+        // Add directory to zip
+		$this->zip->read_dir($pathToZip, false);
+		
+        // Download
+        $this->zip->download($filename);
+	}
 }
 
 ?>
