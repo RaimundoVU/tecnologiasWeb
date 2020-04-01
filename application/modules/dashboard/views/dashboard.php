@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <b>Usuarios</b>
-                        <a class="btn btn-sm btn-warning float-right" href="<?=base_url()?>index.php/users">
+                        <a class="btn btn-sm btn-warning float-right" href="<?=base_url()?>users">
                             Editar
                             <i class="fas fa-user-edit"></i>
                         </a>
@@ -45,7 +45,6 @@
                             <ul class="card-data">
                                 <li>
                                     <b>Profesor:</b> <?= $instance->nombres . " " . $instance->apellido_paterno . " " . $instance->apellido_materno ?>
-
                                 </li>
                                 <!--<li>
                                     <b>Alumnos:</b> 37
@@ -56,7 +55,7 @@
                             <button class="btn btn-primary" onclick="openSubject(<?= $instance->id?>)">
                                 Ver asignatura
                                 <i class="fas fa-chalkboard-teacher"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
