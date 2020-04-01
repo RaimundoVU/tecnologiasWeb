@@ -61,4 +61,12 @@ class Subject_instance_model extends CI_Model{
           }
     }
 
+    function getRows($searchValue){
+      $query = "SELECT * FROM (SELECT asignatura.nombre as nombre, instancia_asignatura.id as id, instancia_asignatura.semestre as semestre,
+      instancia_asignatura.anho as anio FROM asignatura, instancia_asignatura) AS T1  WHERE T1.nombre LIKE '%".$searchValue."%'";
+      
+      return $this->db->query($query)->result_array();
+      
+  }
+
 }

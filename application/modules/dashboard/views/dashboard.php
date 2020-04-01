@@ -55,17 +55,51 @@
                             <button class="btn btn-primary" onclick="openSubject(<?= $instance->id?>)">
                                 Ver asignatura
                                 <i class="fas fa-chalkboard-teacher"></i>
-                            </a>
+                            </button>
+                            
+                        </div>
+                        <div class="d-flex justify-content-end align-items-end" style="margin-top: 10px;">
+                        <button class="btn btn-warning" onclick="copyFolder(<?= $instance->id?>)">
+                                Copiar material
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             <? endforeach; ?>
         </div>
-
-
-
     </div>
-
+</div>
+<div class="modal fade" id="modalClone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Copiar el material</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <div>
+                        <div>
+                            <label> Copiar archivos desde: </label>
+                            <input class="form-control" type="text" id="source" name="source"readonly>
+                            <input class="form-control" type="text" id="sourceId" name="sourceId" readonly hidden>
+                        </div>
+                        <div style="margin-top: 10px" class="form-group ui-widget">
+                            <label >A:</label>
+                            <input class="form-control" type="text" autocomplete="off" id="search_input" placeholder="Buscar Asignatura">
+                            <input hidden id="subject_code" name="subject_code">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <input class="btn btn-primary" onclick="transferFiles()" value="Transferir">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Styles for dashboard -->
@@ -93,11 +127,63 @@
         width: 250px;
         margin: 10px;
     }
+
+    .search_box
+ 	{
+		width:100%;
+		max-width: 650px;
+		margin:0 auto;
+		z-index: 9999999999 !important;
+ 	}
+	.pac-container {
+    	z-index: 9999999999 !important;
+	}
+	
+	ul.ui-autocomplete {
+    	z-index: 1100 !important;
+	}
+	</style>
 </style>
 
 <script>
+    var site_url = '<?= base_url() ?>';
+    $(function() {
+		$("#search_input").autocomplete({
+			source: "<?php echo base_url('dashboard/fetch'); ?>",
+			select: function( event, ui ) {
+				event.preventDefault();
+				$("#search_input").val(ui.item.value);
+				$("#subject_code").val(ui.item.id);
+			}
+		});
+	});
+
+    function transferFiles() {
+        var subjectCode = $("#subject_code").val();
+		var idSource = $("#sourceId").val();
+        $.post(
+            site_url + "dashboard/transferFiles", {
+                subject_code: subjectCode,
+                sourceId: idSource
+            },
+            function(data) {
+                
+                alert("se han transferido todos los archivos")
+                $("#modalClone").modal('hide');
+            });
+    }
+
     function openSubject(id) {
 
         window.location.replace("<?php echo base_url('subject/subject/detail/'); ?>" + id);	
+    }
+
+    function copyFolder(id){
+        var nombre = <?= json_encode($instances) ?>;
+       const selected = nombre.filter(obj => Number(obj.id) === id)[0];
+       console.log(selected);
+        $("#source").val(selected.nombre + " (" + selected.anho + "-"+selected.semestre +")" );
+        $("#sourceId").val(selected.id);
+        $("#modalClone").modal('show');
     }
 </script>
