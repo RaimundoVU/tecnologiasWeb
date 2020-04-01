@@ -71,6 +71,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			border: 1px solid #D0D0D0;
 			box-shadow: 0 0 8px #D0D0D0;
 		}
+
+		ul.ui-autocomplete {
+			z-index: 1100 !important;
+		}
 	</style>
 </head>
 
@@ -78,17 +82,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div id="container">
 		<h1>Módulo Estudiantes</h1>
 		<div>
-			<button class="btn btn-primary" onclick="mostrarModal()">Agregar estudiante</button>
-			<div>
-				<form id="excel-upl" enctype="multipart/form-data" method="post" accept-charset="utf-8">
-						<div class="col-lg-3 order-lg-2">
-							<input type="file" class="custom-file-input" id="validatedCustomFile" name="file">
-							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-							<button type="submit" name="import" onclick="excel_upload()" class="float-right btn btn-primary">Import</button>
-						</div>
-					
-				</form>
-			</div>
+			<row>
+				<col class="col-lg-3">
+				<button class="btn btn-primary" onclick="mostrarModal()">Agregar estudiante</button>
+				</col>
+				<col class="col-lg-3">
+				<div class="col-lg-3">
+				<input type="file" class="custom-file-input" id="validatedCustomFile" name="file">
+				<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+				<button type="submit" name="import" onclick="excel_upload()" class="float-right btn btn-primary">Import</button>
+				</div>
+				</col>
+			</row>
 		</div>
 
 		<div id="body">
@@ -144,7 +149,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div class="form-signin">
 
 					<div class="form-group">
-						<input type="text" class="form-control" id="matricula" name="matricula" placeholder="Matricula" value="<?php echo set_value('matricula'); ?>">
+						<div class="form-group ui-widget">
+							<input class="form-control " type="text" id="search_matricula" placeholder="Buscar Matricula" autocomplete="off" />
+						</div>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" id="nombre_estudiante" placeholder="Nombre Estudiante" name="nombre_estudiante" value="<?php echo set_value('nombre_estudiante'); ?>">
@@ -210,6 +217,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script type="text/javascript">
 	var base_url = '<? echo base_url() ?>'
 
+	$(function() {
+		$("#search_matricula").autocomplete({
+			source: base_url + 'students/fetch_matricula',
+			select: function(event, ui) {
+				event.preventDefault();
+				$("#search_matricula").val(ui.item.value);
+				$("#matricula").val(ui.item.value);
+				$("#nombre_estudiante").val(ui.item.nombre);
+				$("#apellido_p").val(ui.item.apellido_paterno);
+				$("#apellido_m").val(ui.item.apellido_materno);
+				//$("#subject_code").val(ui.item.id);
+			}
+		});
+	});
+
 	function reload_view() {
 		$.post(
 			base_url + "students/reload_view", {},
@@ -225,7 +247,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 	function save_student() {
 		let subject_id = $("#id_asig").val();
-		var matricula = $("#matricula").val();
+		var matricula = $("#search_matricula").val();
 		var nombre_estudiante = $("#nombre_estudiante").val();
 		var apellido_p = $("#apellido_p").val();
 		var apellido_m = $("#apellido_m").val();
@@ -245,21 +267,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			}
 		)
 	}
+
 	function excel_upload() {
 		var file_data = $("#validatedCustomFile").prop("files")[0];
 		var form_data = new FormData();
 		form_data.append("file", file_data);
 		form_data.append("subject_id", $("#id_asig").val());
-	   $.ajax({
-		url: base_url + "students/excel_upload",
-		type: "POST",
-		data: form_data,
-		processData: false,  
-		contentType: false,
-		success:function(data){
-			console.log(data);
-			alert(data);
-		}
+		$.ajax({
+			url: base_url + "students/excel_upload",
+			type: "POST",
+			data: form_data,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				console.log(data);
+				alert(data);
+			}
 		});
 	}
 

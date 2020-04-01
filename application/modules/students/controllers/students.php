@@ -37,17 +37,30 @@ class students extends MY_Controller {
 	public function add_student()
 	{
 		header('Content-Type: application/json');
+		$matricula = $this->input->post('matricula');
+		$subject_id = $this->input->post('subject_id');
 		$data = array(
 			'matricula' => $this->input->post('matricula'),
 			'nombre' => $this->input->post('nombre'),
 			'apellido_materno' => $this->input->post('apellido_m'),
 			'apellido_paterno' => $this->input->post('apellido_p')
 		);
-		if ($this->student_model->check($this->input->post('matricula'))) 
-		{
+		$data_subject = [
+			'id_estudiante' => $matricula,
+			'id_instancia_asignatura' => $subject_id
+		];
+		if(!$this->student_model->check($matricula)){
+			if ($this->student_model->check_student_in_subject($data_subject)) {
+				$this->student_model->add_student_in_subject($data_subject);
+				$this->student_model->add_nota($subject_id, $matricula);
+				echo json_encode( array('ok' => true) );
+				return;
+			}
+		}
+		else{
 			$this->student_model->add_student($data);
-			$this->add_student_in_subject($this->input->post('subject_id'), $data['matricula']);
-			$this->student_model->add_nota($this->input->post('subject_id'), $data['matricula']);
+			$this->student_model->add_student_in_subject($data_subject);
+			$this->student_model->add_nota($subject_id, $matricula);
 			echo json_encode( array('ok' => true) );
 			return;
 		}
@@ -128,6 +141,31 @@ class students extends MY_Controller {
 		return "Alumnos agregados correctamente";
 	}
 
+
+	public function fetch_matricula()
+	{
+		$returnData = array();
+        
+        // Get skills data
+		$conditions['searchTerm'] = $this->input->get('term');
+        //$conditions['conditions']['status'] = '1';
+        $skillData = $this->student_model->getRows($conditions);
+        
+        // Generate array
+        if(!empty($skillData)){
+            foreach ($skillData as $row){
+                $data['id'] = $row['matricula'];
+				$data['value'] = $row['matricula'];
+				$data['nombre'] = $row['nombre'];
+				$data['apellido_paterno'] = $row['apellido_paterno'];
+				$data['apellido_materno'] = $row['apellido_materno'];	
+                array_push($returnData, $data);
+            }
+        }
+        
+        // Return results as json encoded array
+        echo json_encode($returnData);
+	}
 	public function add_student_in_subject($id_asig, $matricula)
 	{
 		$data = [
