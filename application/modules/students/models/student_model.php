@@ -118,6 +118,31 @@ class Student_model extends CI_Model {
     return [];
   }
 
+  function getRows($params = array()){
+    $this->db->select("*");
+    $this->db->from('estudiante');
+    
+    
+    //search by terms
+    if(!empty($params['searchTerm'])){
+        $this->db->like('matricula', $params['searchTerm']);
+    }
+    
+    $this->db->order_by('matricula', 'asc');
+    
+    if(array_key_exists("matricula", $params)){
+        $this->db->where($params['matricula']);
+        $query = $this->db->get();
+        $result = $query->row_array();
+    }else{
+        $query = $this->db->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+    }
+
+     //return fetched data
+    return $result;
+}
+
 }
 
 /* End of file User_model.php */
