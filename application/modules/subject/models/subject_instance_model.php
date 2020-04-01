@@ -61,4 +61,44 @@ class Subject_instance_model extends CI_Model{
           }
     }
 
+   
+
+
+    public function get_subject_id($id)
+    {
+      $this->db->select('asignatura.nombre , asignatura.codigo, instancia_asignatura.anho, instancia_asignatura.semestre, instancia_asignatura.id');
+      $this->db->from('asignatura, instancia_asignatura');
+      $this->db->where('asignatura.id = '.$id.' and instancia_asignatura.id_asignatura = '.$id);
+      return $this->db->get()->result();
+
+
+    }
+
+    public function check($codigo, $nombre)
+  {
+    $query = $this->db->get_where('asignatura', array(
+      'codigo' => $codigo,
+      'nombre' => $nombre
+    ));
+    $count = $query->num_rows();
+    return $count === 0;
+  }
+
+
+  public function get_id_subject($codigo, $nombre)
+  {
+     $this->db->select('*');
+     $result = $this->db->get_where('asignatura', array(
+      'codigo' => $codigo,
+      'nombre' => $nombre
+    ))->result();
+   
+    foreach($result as $row){
+      return $row->id;
+  }
+
+    
+  }
+
+
 }

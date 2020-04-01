@@ -23,4 +23,13 @@ class Subject_user_model extends CI_Model{
         $data['codigo_asignatura']=$code;
         $this->db->insert('asignatura_usuario',$data);
     }
+
+
+    public function get_all_proffesors()
+    {
+      $this->db->select('nombres, id_usuario, apellido_paterno, apellido_materno');
+      $this->db->from('usuario');
+      $this->db->where('usuario.tipo = 3' );
+      return  $this->db->get()->result();
+    }
 }
