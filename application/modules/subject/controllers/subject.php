@@ -11,7 +11,7 @@ class Subject extends MY_Controller {
 		$this->load->model('subject_model');
 		$this->load->model('subject_instance_model');
 		$this->load->model('subject_user_model');
-		
+		$this->load->model('grade/gradeModel');
 		$this->load->helper('file');
 		$this->load->helper('directory');
 		$this->load->helper('download');
@@ -261,6 +261,17 @@ class Subject extends MY_Controller {
         // Download
         $this->zip->download($filename);
 	}
+
+
+	public function monitoreo($id)
+	{
+		$data['evaluations'] = $this->subject_instance_model->getNUmbersStudnetsWithoutGradeByEvaluation($id);
+		$data['subjects'] = $this->subject_instance_model->getSubjectByIdInstance($id);
+		$this->render_page('subject_monitor_list_evaluation',$data);
+	}
+
+
+	
 }
 
 ?>

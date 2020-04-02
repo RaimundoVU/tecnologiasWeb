@@ -189,4 +189,24 @@ class Subject_instance_model extends CI_Model
 
     return $this->db->query($query)->result_array();
   }
+
+  function getNUmbersStudnetsWithoutGradeByEvaluation($id)
+  {
+      $query = 'SELECT count(T.id_nota) as num_sin_nota , T.id_inst , T.id_ev ,T.id_asig, T.fecha_ev, T.titulo, T.semestre, T.anho, asignatura.nombre FROM asignatura, (SELECT instancia_asignatura.id as id_inst, evaluacion.id_evaluacion as id_ev, nota.valor as valor , nota.id_nota as id_nota, instancia_asignatura.semestre as semestre, instancia_asignatura.anho as anho, evaluacion.fecha as fecha_ev, evaluacion.topico as titulo, instancia_asignatura.id_asignatura as id_asig FROM instancia_asignatura, evaluacion, nota WHERE nota.id_evaluacion = evaluacion.id_evaluacion and evaluacion.id_ins_asignatura = instancia_asignatura.id) as T where T.valor = 0 and T.id_inst = '.$id.' and T.id_asig = asignatura.id GROUP BY T.id_ev';
+      return $this->db->query($query)->result();
+  }
+
+
+
+  public function getSubjectByIdInstance($id)
+  {
+      $query = 'SELECT asignatura.nombre , asignatura.codigo, instancia_asignatura.semestre, instancia_asignatura.anho FROM asignatura, instancia_asignatura WHERE instancia_asignatura.id = '.$id.' and asignatura.id = instancia_asignatura.id_asignatura';
+      return $this->db->query($query)->result();
+  }
+
+
+ 
+
+
+
 }
