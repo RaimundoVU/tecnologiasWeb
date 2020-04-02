@@ -118,6 +118,18 @@ class Student_model extends CI_Model {
     return [];
   }
 
+  public function get_students_alphabetical($id_ins)
+  {
+    
+    $this->db->select('*');
+    $this->db->from('estudiante');
+    $this->db->join('asignatura_estudiante', 'estudiante.matricula=asignatura_estudiante.id_estudiante', 'inner');
+    $this->db->where('asignatura_estudiante.id_instancia_asignatura', $id_ins);
+    $this->db->order_by('nombre','desc');
+    return $this->db->get()->result_array();
+
+  }
+
   function getRows($params = array()){
     $this->db->select("*");
     $this->db->from('estudiante');
