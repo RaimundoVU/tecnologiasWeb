@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class students extends MY_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('student_model');
+		$this->load->helper('download');
 	}
 
 	public function index()
@@ -208,5 +210,44 @@ class students extends MY_Controller {
 			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
 			return;
 		}		
+	}
+
+	public function export_excel($id_ins)
+	{
+		$fileName = 'estudiantes.xlsx';
+		$studentData = $this->student_model->get_students_alphabetical($id_ins);
+		$spreadsheet = new SpreadSheet();
+		$sheet = $spreadsheet->getActiveSheet();
+       	$sheet->setCellValue('A1', 'Nombre');
+        $sheet->setCellValue('B1', 'Apellido Paterno');
+        $sheet->setCellValue('C1', 'Apellido Materno');
+		$sheet->setCellValue('D1', 'Matricula');
+		$rows = 3;
+		foreach($studentData as $row ){
+			$sheet->setCellValue('A' . $rows, $row['nombre']);
+            $sheet->setCellValue('B' . $rows, $row['apellido_paterno']);
+            $sheet->setCellValue('C' . $rows, $row['apellido_materno']);
+			$sheet->setCellValue('D' . $rows, $row['matricula']);
+			$rows++;
+		}
+		$writer = new Xlsx($spreadsheet);
+		$writer->save("upload/".$fileName);
+		
+		if ($fileName) {
+			$file = realpath ( "upload" ) . "\\" . $fileName;
+			// check file exists    
+			if (file_exists ( $file )) {
+			 // get file content
+			 $data = file_get_contents ( $file );
+			 //force download
+			 echo ('aqui toy');
+			 force_download ( $fileName, $data);
+			} else {
+			 // Redirect to base url
+			 redirect ( base_url () );
+			}
+		}
+		
+
 	}
 }

@@ -83,6 +83,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="<?=base_url()?>dashboard">Home <span class="sr-only">(current)</span></a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="<?=base_url()?>subject">Lista Asignaturas <span class="sr-only">(current)</span></a>
+      </li>
 	  </li> 
 	  <li class="nav-item active">
 	  	<a class="nav-link" href="<?=base_url()?>reports">Reportes <span class="sr-only">(current)</span></a>
