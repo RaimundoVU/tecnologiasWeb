@@ -26,5 +26,11 @@ class gradeModel extends CI_Model{
         return $this->db->query($query);
     }
 
+    public function getStudentsWithoutGrade($id)
+    {
+      $query= "SELECT matricula, nombre, apellido_paterno, apellido_materno, valor, observacion FROM nota, estudiante WHERE id_evaluacion= ".$id." AND estudiante.matricula = nota.matricula_estudiante AND nota.valor = 0";
+      return $this->db->query($query)->result();
+    }
+
 }
 ?>

@@ -149,7 +149,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<td><? echo $row->nombre ?></td>
 	<td><? echo $row->anho?>-<? echo $row->semestre?></td>
 	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> 
-	<button class="btn btn-primary" onclick="openEvaluation(<?=$row->id?>)">Evaluaciones</button> 
+	<button class="btn btn-primary" onclick="openEvaluation(<?=$row->id?>)">Evaluaciones</button>
+	<button class="btn btn-primary" onclick="openMonitoreo(<?=$row->id?>)">Monitorear</button>  
 	<button class="btn btn-primary" onclick="openSubject(<?=$row->id?>)">Ver</button> 
 	</tr>
 	<?$i++;endforeach;?>
@@ -207,6 +208,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	function openEvaluation(id) {
 		window.location.replace("<?php echo base_url('evaluation/ev/'); ?>" + id);	
+	}
+
+	function openMonitoreo(id)
+	{
+		window.location.replace("<?php echo base_url('subject/monitoreo/'); ?>" + id);
 	}
 
 	function openSubject(id) {

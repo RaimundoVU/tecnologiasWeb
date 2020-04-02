@@ -80,7 +80,7 @@
         var grade = $("#editGrade").val();
         var obs = $("#editObs").val();
         var matricula = $("#idEdit").val();
-        $.post(site_url + "grade/editGrade", {
+        $.post("<?=base_url('grade/editGrade')?>", {
 			grade: grade,
 			obs: obs,
             matricula: matricula,
