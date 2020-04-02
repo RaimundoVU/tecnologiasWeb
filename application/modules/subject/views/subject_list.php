@@ -136,6 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <th scope="col">Codigo </th>
 	  <th scope="col">Nombre </th>
 	  <th scope="col">Semestre</th>
+	  <th scope="col">Estado</th>
       <th scope="col">Opciones</th>
     </tr>
   </thead>
@@ -148,9 +149,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<? echo $row->codigo?></td>
 	<td><? echo $row->nombre ?></td>
 	<td><? echo $row->anho?>-<? echo $row->semestre?></td>
+	<td><? echo $row->estado ? 'Activo' : 'Cerrado';?></td>
 	<td><button class="btn btn-primary" id="seeSubject" onclick="to_students(<?=$i?>)">Estudiantes</button> 
 	<button class="btn btn-primary" onclick="openEvaluation(<?=$row->id?>)">Evaluaciones</button> 
 	<button class="btn btn-primary" onclick="openSubject(<?=$row->id?>)">Ver</button> 
+	<button class="btn btn-primary" onclick="closeSubject(<?=$row->id?>)">Cerrar Modulo</button> 
 	</tr>
 	<?$i++;endforeach;?>
   </tbody>
@@ -212,6 +215,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	function openSubject(id) {
 		let subject_id = $("#id"+id).val();
 		window.location.replace("<?php echo base_url('subject/detail/'); ?>" + subject_id);	
+	}
+
+	function closeSubject(id) {
+		let code = id;
+		$.post(
+			"<?php echo base_url('subject/close_subject/'); ?>", {
+				code: code,
+			},
+			function(data) {
+				alert(data);
+				$("#container").hide('slow');
+				location.reload();
+				$("#container").show('slow');
+			}
+		)
 	}
 
 	

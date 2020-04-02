@@ -107,6 +107,26 @@ class Subject extends MY_Controller {
 
 	}
 
+	public function close_subject()
+	{
+		$code_subject = $this->input->post("code");
+		if ($this->subject_instance_model->check_subject_instance($code_subject))
+		{
+			echo "Esta asignatura ya estaba cerrada";
+			return;
+		}
+		if ($this->subject_instance_model->check_grades($code_subject))
+		{
+			$this->subject_instance_model->close_subject($code_subject);
+			echo "Correctamente cerrado";
+			return;
+		}else{
+			echo "Aun no se ingresan todas las notas planificadas.";
+			return;
+		}
+
+	}
+
 
 	public function add_subject_with_instance()
 	{
