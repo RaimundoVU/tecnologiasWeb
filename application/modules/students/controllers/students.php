@@ -137,10 +137,12 @@ class students extends MY_Controller {
 					}
 				}
 			} else {
-				return "Please import correct file, did not match excel sheet column";
+				 echo "Please import correct file, did not match excel sheet column";
+				 return;
 			}
 		}
-		return "Alumnos agregados correctamente";
+		echo "Alumnos agregados correctamente";
+		return;
 	}
 
 
