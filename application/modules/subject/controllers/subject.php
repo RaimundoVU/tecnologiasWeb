@@ -91,10 +91,6 @@ class Subject extends MY_Controller {
 
 	public function add_subject()
 	{
-
-
-
-
 		$code_subject = $this->input->post("code");
 		$name_subject = $this->input->post("name");
 
@@ -109,16 +105,11 @@ class Subject extends MY_Controller {
 			return;
 		}
 
-		
 	}
 
 
 	public function add_subject_with_instance()
 	{
-
-
-
-		
 		$code_subject = $this->input->post("code");
 		$name_subject = $this->input->post("name");
 		$id_proffesor = $this->input->post("proffesor");
@@ -133,22 +124,13 @@ class Subject extends MY_Controller {
 			$id_subject = $this->subject_instance_model->get_id_subject($code_subject, $name_subject);
 			$this->subject_instance_model->add($id_subject,$semestre,$id_proffesor,$year);
 			
-			
-			
-
-
-
 			echo json_encode( array('ok' => true) );
 			return;
 		}else{
 			echo json_encode( array('ok' => false) );
 			return;
 		}
-
-		
 	}
-
-
 
 	public function edit_subject_with_instance()
 	{
@@ -175,26 +157,42 @@ class Subject extends MY_Controller {
 	public function instances($id)
 	{
 		$result = $this->subject_instance_model->get_subject_id($id);
-
 		echo json_encode($result);
 	}
 
 	public function subjects($id)
 	{
 		$result = $this->subject_instance_model->get_subject_id($id);
-
 		echo json_encode($result);
 	}
 
 
 	public function show_subjects($id)
 	{
-
-
 		$data['subjects'] = $this->subject_instance_model->get_subject_id($id);
 		$this->render_page('subject_list',$data);
 	}
+	
+	public function detail($id) {
+		
+		if (!is_dir($this->path.DIRECTORY_SEPARATOR.$id)) {
+			mkdir($this->path.DIRECTORY_SEPARATOR.$id,0777,TRUE);
+		}
+		$this->path = $this->path."/".$id;
 
+		$data['subject'] = $this->subject_instance_model->get_subject($id);
+		$data['idSubject'] = $id;
+		$data['directories'] = directory_map($this->path);
+		$data['path'] = $this->path;
+		$this->render_page('subject_view', $data);
+	}
+
+	public function getInfo() {
+		$subPath = $this->input->post("subPath");
+		$path = $this->input->post("path");
+		echo json_encode(directory_map($path.DIRECTORY_SEPARATOR.$subPath.DIRECTORY_SEPARATOR));
+	}
+	
 	
 	public function createFolder() {
 		$pathFolder = $this->input->post("pathFolder");
