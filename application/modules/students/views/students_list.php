@@ -85,17 +85,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<row>
 				<col class="col-lg-3">
 				<button class="btn btn-primary" onclick="mostrarModal()">Agregar estudiante</button>
+				<a class="btn btn-primary" href="<?php echo base_url(); ?>/students/export_excel/<?php echo($id_asig)?>">Exportar Excel</a>
 				</col>
 				<col class="col-lg-3">
 				<div class="col-lg-3">
 				<input type="file" class="custom-file-input" id="validatedCustomFile" name="file">
-				<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-				<button type="submit" name="import" onclick="excel_upload()" class="float-right btn btn-primary">Import</button>
+				<label class="custom-file-label" for="validatedCustomFile">Elegir Archivo Excel...</label>
+				<button type="submit" name="import" onclick="excel_upload()" class="float-right btn btn-primary">Importar</button>
 				</div>
 				</col>
 			</row>
 		</div>
-
 		<div id="body">
 			<div id="listado">
 				<table class="table">
