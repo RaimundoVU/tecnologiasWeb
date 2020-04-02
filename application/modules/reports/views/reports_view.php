@@ -58,8 +58,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="card-body">
 						<p class="card-text">
 							<button id="btnReport" class="btn btn-success" onclick="getTable1()">Promedios por Curso</button>
-							<button id="btnReport" class="btn btn-success" onclick="getTable2()">Docentes con notas atrasadas</button>
-							<button id="btnReport" class="btn btn-success" onclick="getTable3()">Docentes con notas al día</button>
+							<button id="btnReport" class="btn btn-success" onclick="getTable2()">Docentes con notas al día</button>
+							<button id="btnReport" class="btn btn-success" onclick="getTable3()">Docentes con notas atrasadas</button>
 							<button id="btnReport" class="btn btn-success" onclick="getTable4()">Asignaturas por fecha</button>
 							<button id="btnReport" class="btn btn-success" onclick="getTable5()">Docentes por fecha</button>
 						</p>
@@ -94,7 +94,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	}
 
 	function getTable2() {
-		$('#title-report').html("Listado de docentes con notas atrasadas");
+		$('#title-report').html("Listado de docentes con notas al día");
 		$.post(
              base_url + "reports/getTableReport2",
             function(data) {
@@ -104,7 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	}
 
 	function getTable3() {
-		$('#title-report').html("Listado de docentes con notas al día");
+		$('#title-report').html("Listado de docentes con notas atrasadas");
 		$.post(
              base_url + "reports/getTableReport3",
             function(data) {
