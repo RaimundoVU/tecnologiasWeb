@@ -13,11 +13,12 @@ class Subject_instance_model extends CI_Model
     // 
   }
 
+
   public function get_all($email)
   {
     //$this->db->select('*');
     $sql = "Select asignatura.nombre as nombre, asignatura.codigo as codigo, instancia_asignatura.anho as
-        anho,instancia_asignatura.semestre as semestre,instancia_asignatura.id as id From asignatura,instancia_asignatura,usuario WHERE instancia_asignatura.id_usuario = usuario.id_usuario AND 
+        anho,instancia_asignatura.semestre as semestre,instancia_asignatura.id as id, instancia_asignatura.estado as estado From asignatura,instancia_asignatura,usuario WHERE instancia_asignatura.id_usuario = usuario.id_usuario AND 
         instancia_asignatura.id_asignatura = asignatura.id AND usuario.email = '$email'";
     return $this->db->query($sql)->result();
   }
@@ -64,6 +65,36 @@ class Subject_instance_model extends CI_Model
   }
 
 
+  public function check_subject_instance($id)
+  {
+    $this->db->select('*');
+    $this->db->from('instancia_asignatura');
+    $this->db->where('instancia_asignatura.id', $id);
+    $this->db->where('instancia_asignatura.estado', 1);
+    $query = $this->db->get();  
+    return $query->num_rows() === 0;
+  }
+
+  public function check_grades($id_ins)
+  {
+    $this->db->select('*');
+    $this->db->from('instancia_asignatura');
+    $this->db->join('evaluacion', 'instancia_asignatura.id=evaluacion.id_ins_asignatura', 'inner');
+    $this->db->join('nota', 'evaluacion.id_evaluacion=nota.id_evaluacion', 'inner');
+    $this->db->where('instancia_asignatura.id', $id_ins);
+    $this->db->where('nota.valor','<=', 0);
+    $query = $this->db->get();    
+    return $query->num_rows() === 0;
+  }
+
+  public function close_subject($id)
+  {
+    $data = [
+      'estado' => 0
+    ];
+		$this->db->where('id', $id);
+		$this->db->update('instancia_asignatura', $data);
+  }
 
 
   public function get_subject_id($id)

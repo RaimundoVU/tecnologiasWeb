@@ -47,6 +47,7 @@ CREATE TABLE instancia_asignatura(
 	id_asignatura INTEGER NOT NULL,
 	semestre INTEGER NOT NULL,
 	anho INTEGER NOT NULL,
+	estado  TINYINT(1) DEFAULT 1,
 	id_usuario INTEGER
 );
 
