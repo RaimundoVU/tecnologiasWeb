@@ -20,7 +20,9 @@ class reports extends MY_Controller {
 	}
 
 	public function getTableReport2() {
-		return $this->load->view('report2');
+
+		$data['data'] = $this->reports_model->getReport2();
+		return $this->load->view('report2',$data);
 	}
 
 	public function getTableReport3() {

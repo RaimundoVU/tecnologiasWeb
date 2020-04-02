@@ -27,6 +27,12 @@ class Reports_model extends CI_Model {
   {
     //  
   }
+
+  public function getReport2()
+  {
+    $query = 'SELECT usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno, usuario.email, asignatura.nombre , W.semestre, W.anho FROM (SELECT count(T.id_nota) as num_sin_nota, T.id_inst as id_inst , T.id_asig as id_asig, T.id_pro as id_pro, T.semestre as semestre, T.anho as anho FROM (SELECT instancia_asignatura.id as id_inst, evaluacion.id_evaluacion as id_ev, nota.valor as valor , nota.id_nota as id_nota, instancia_asignatura.id_asignatura as id_asig, instancia_asignatura.id_usuario as id_pro, instancia_asignatura.semestre as semestre, instancia_asignatura.anho as anho FROM instancia_asignatura, evaluacion, nota WHERE nota.id_evaluacion = evaluacion.id_evaluacion and evaluacion.id_ins_asignatura = instancia_asignatura.id) as T where T.valor = 0 GROUP BY T.id_inst) as W, asignatura , usuario WHERE W.id_asig = asignatura.id and usuario.id_usuario = W.id_pro and usuario.tipo = 3';
+    return $this->db->query($query)->result();
+  }
   
 }
 
