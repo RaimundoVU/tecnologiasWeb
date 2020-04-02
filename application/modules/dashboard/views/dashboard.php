@@ -175,7 +175,7 @@
 
     function openSubject(id) {
 
-        window.location.replace("<?php echo base_url('subject/subject/detail/'); ?>" + id);	
+        window.location.replace("<?php echo base_url('subject/detail/'); ?>" + id);	
     }
 
     function copyFolder(id){
