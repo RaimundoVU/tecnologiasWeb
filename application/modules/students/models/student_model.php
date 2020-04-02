@@ -143,6 +143,16 @@ class Student_model extends CI_Model {
     return $result;
 }
 
+  function getStudentSubjects($matricula)
+  {
+    $query = "SELECT * FROM asignatura,
+            (SELECT id AS id_ins_asig,anho, semestre, id_asignatura FROM instancia_asignatura, 
+            (SELECT id_instancia_asignatura FROM asignatura_estudiante WHERE $matricula = asignatura_estudiante.id_estudiante) 
+            AS T2 WHERE T2.id_instancia_asignatura = instancia_asignatura.id) AS T1 
+            WHERE asignatura.id = T1.id_asignatura";
+    return $this->db->query($query)->result();
+  }
+
 }
 
 /* End of file User_model.php */

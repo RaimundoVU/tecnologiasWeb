@@ -209,4 +209,16 @@ class students extends MY_Controller {
 			return;
 		}		
 	}
+
+	public function getStudentSubjects()
+	{
+		try {
+			$matricula = $this->input->post("matricula");
+			$data['asignaturas'] = $this->student_model->getStudentSubjects($matricula);
+			echo json_encode($data);
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}
+	}
 }

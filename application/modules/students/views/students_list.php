@@ -104,6 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<th>Apellido Paterno</th>
 					<th>Apellido Materno</th>
 					<th></th>
+					<th></th>
 					<input type="hidden" id="id_asig" value=<?= "$id_asig" ?> readonly>
 					<? $i = 0;
 					foreach ($resultado as $row) : ?>
@@ -124,6 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								<input type="hidden" id="d<?= $i ?>" value=<?= "$row->apellido_materno" ?> readonly>
 								<p><?= $row->apellido_materno ?></p>
 							</td>
+							<td><button class="btn btn-info" onclick="verResumen(<?= $i ?>)">Resumen</button></td>
 							<td><button class="btn btn-info" onclick="editar(<?= $i ?>)">Editar</button></td>
 						</tr>
 					<? $i++;
@@ -214,6 +216,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 </div>
 
+<div id="student_resume_modal" style="display: none;" class="modal" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 id ="studentName"></h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="resume_content">
+					<? $asignaturas = json_decode($res);
+						$i = 0;
+						var_dump($asignaturas);
+						foreach($asignaturas as $row) :
+					?>
+						<p><? echo $row ?></p>
+					<? $i++;
+					endforeach; ?>
+				</div>
+			<div class="modal-footer">
+				<button class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+				<button class="btn btn-success" onclick="guardarCambios()">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 	var base_url = '<? echo base_url() ?>'
 
@@ -284,6 +314,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				alert(data);
 			}
 		});
+	}
+
+	function verResumen(indice) {
+		var nombre = $("#b" + indice).val();
+		var apellidoPaterno = $("#c" + indice).val();
+		var apellidoMaterno = $("#d"+ indice).val();
+		var matricula = $("#a" + indice).val();
+		$("#studentName").text(nombre + " " + apellidoPaterno + " " +apellidoMaterno);
+		$.post(
+			base_url + "students/getStudentSubjects/",
+			{
+				matricula: matricula
+			},
+			function(res) {
+				var array = JSON.parse(res)
+				console.log(JSON.parse(res).asignaturas);
+				$("#resume_content").html(res);
+
+				/*array.forEach( function(valor, indice, array){
+					$("#asignatura_name").text(valor.nombre);
+				})*/
+				$("#student_resume_modal").modal('show');
+			} 
+		);
 	}
 
 	function editar(indice) {
