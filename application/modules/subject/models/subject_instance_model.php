@@ -43,14 +43,67 @@ class Subject_instance_model extends CI_Model
     //$this->db->get('instancia_asignatura')->result();
   }
 
-  public function add($code, $semester, $professor_id, $year)
-  {
-    $data['id_asignatura'] = $code;
-    $data['semestre'] = $semester;
-    $data['id_usuario'] = $professor_id;
-    $data['anho'] = $year;
-    $this->db->insert('instancia_asignatura', $data);
-  }
+    public function get_instances_by_subject($id_subject)
+    {
+      $this->db->select('asignatura.nombre, instancia_asignatura.id, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
+      $this->db->from('asignatura');
+      $this->db->where('instancia_asignatura.id_asignatura', $id_subject);
+      $this->db->join('instancia_asignatura', 'instancia_asignatura.id_asignatura = asignatura.id');
+      $this->db->join('usuario', 'instancia_asignatura.id_usuario = usuario.id_usuario');
+      return $this->db->get()->result();
+    }
+
+    public function get_instances_by_semester($semester)
+    {
+      $this->db->select('asignatura.nombre, instancia_asignatura.id, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
+      $this->db->from('asignatura');
+      $this->db->where('instancia_asignatura.semestre', $semester);
+      $this->db->join('instancia_asignatura', 'instancia_asignatura.id_asignatura = asignatura.id');
+      $this->db->join('usuario', 'instancia_asignatura.id_usuario = usuario.id_usuario');
+      return $this->db->get()->result();
+    }
+
+    public function get_instances_by_year($year)
+    {
+      $this->db->select('asignatura.nombre, instancia_asignatura.id, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
+      $this->db->from('asignatura');
+      $this->db->where('instancia_asignatura.anho', $year);
+      $this->db->join('instancia_asignatura', 'instancia_asignatura.id_asignatura = asignatura.id');
+      $this->db->join('usuario', 'instancia_asignatura.id_usuario = usuario.id_usuario');
+      return $this->db->get()->result();
+    }
+
+    public function get_instances_filtered($year = null, $semester = null, $id_subject = null) 
+    {
+      $this->db->select('asignatura.nombre, instancia_asignatura.id, instancia_asignatura.semestre, instancia_asignatura.anho, asignatura.codigo, usuario.nombres, usuario.apellido_paterno, usuario.apellido_materno');
+      $this->db->from('asignatura');
+      $this->db->join('instancia_asignatura', 'instancia_asignatura.id_asignatura = asignatura.id');
+      $this->db->join('usuario', 'instancia_asignatura.id_usuario = usuario.id_usuario');
+
+      if ($year != null) {
+        $this->db->where('instancia_asignatura.anho', $year);
+      }
+
+      if ($semester != null) {
+        $this->db->where('instancia_asignatura.semestre', $semester);
+      }
+
+      if ($id_subject != null) {
+        $this->db->where('instancia_asignatura.id_asignatura', $id_subject);
+      }
+
+      return $this->db->get()->result();
+    }
+
+
+    public function add($code,$semester,$professor_id,$year)
+    {
+        $data['id_asignatura'] = $code;
+        $data['semestre']= $semester;
+        $data['id_usuario']= $professor_id;
+        $data['anho'] = $year;
+        $this->db->insert('instancia_asignatura',$data);
+    }
 
   public function get_teacher_id($email)
   {

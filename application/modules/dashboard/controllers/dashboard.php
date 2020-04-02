@@ -14,16 +14,52 @@ class dashboard extends MY_Controller {
 		$this->load->model('evaluation/evaluationModel');
 	}
 
-	public function index()
+	public function index( $instances = null)
 	{
 		//$this->load->view('users_list');
 		$data['users'] = $this->user_model->get_all();
-		$data['instances'] = $this->subject_instance_model->get_all_instances();
+		$data['subjects'] = $this->subject_model->get_all();
 
-		$data['sections'] = ['Cálculo I', 'Introducción a la programación','Cómo acosar en ayudantias', 'Cómo ser infunable I', 'Cómo ser infunable II', 'Algoritmos y estructuras de datos', 'COA I' ];
+		if ($instances != null){
+			$data['instances'] = $instances;
+		}
+		else {
+			$data['instances'] = $this->subject_instance_model->get_all_instances();
+		}
+
+		$years = [];
+
+		foreach($data['instances'] as $instance) {
+			if (!in_array($instance->anho, $years)) {
+				array_push($years, $instance->anho);
+			}
+		}
+
+		$data['years'] = $years;
 
 		$this->render_page('dashboard', $data);
 	}
+
+	public function subject($id_subject) 
+	{
+		//$id_subject = $this->input->post('id_subject');
+		$instances = $this->subject_instance_model->get_instances_by_subject($id_subject);
+		$this->index($instances);
+	}
+
+	public function year($year)
+	{
+		$instances = $this->subject_instance_model->get_instances_by_year($year);
+		$this->index($instances);
+	}
+
+	public function semester($semester)
+	{
+		$instances = $this->subject_instance_model->get_instances_by_semester($semester);
+		$this->index($instances);
+	}
+
+	
 
 	public function fetch()
 	{
