@@ -23,10 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div>
 	<div class="d-inline-block">
-		<input id="inputDate" class="form-control" type="date">
+		<input id="inputNumber" class="form-control" type="number">
 	</div>
 	<div class="d-inline-block">
-		<button class="btn btn-primary">Buscar</button>
+		<button class="btn btn-primary" onclick="getTable4()">Buscar</button>
 	</div>
 </div>
 	<table class="table table-white">
@@ -35,20 +35,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <th scope="col">Nombre del Curso</th>
       <th scope="col">Semestre</th>
       <th scope="col">Año</th>
-      <th scope="col">Promedio de notas</th>
+      <th scope="col">Alumnos</th>
     </tr>
   </thead>
-  <tbody>
-	<td>Mate</td>
-	<td>2</td>
-	<td>2020</td>
-	<td>62</td>
+  <tbody id="tbody">
   </tbody>
 </table>
 
 	
 <script type="text/javascript">
-
+function getTable4() {
+		let number = $("#inputNumber").val();
+		$('#title-report').html("Asignaturas incritas");
+		$.post(
+             base_url + "reports/getSubjectsByNumber", {
+				number: number,
+			},
+            function(data) {
+				var json = JSON.parse(data);
+				var res='';
+				for(subject in json)
+				{
+					res+="<tr><td>" + json[subject].nombre+"</td>"+
+					"<td>" + json[subject].semestre+"</td>"+
+					"<td>" + json[subject].anho+"</td>"+
+					"<td>" + json[subject].cantidad+"</td></tr>";
+				}
+                $("#tbody").html(res)
+              
+            });
+	}
 	
 </script>
 </body>

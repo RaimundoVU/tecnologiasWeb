@@ -25,10 +25,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </tr>
   </thead>
   <tbody>
-	<td>Mate</td>
-	<td>2</td>
-	<td>2020</td>
-	<td>62</td>
+  <?$i=0; foreach($subjectData as $row):?>
+	<tr>
+	<td><? echo $row->nombre ?></td>
+	<td><? echo $row->semestre?></td>
+	<td><? echo $row->anho?></td>
+	<td><? echo $row->promedio?></td>
+	</tr>
+	<?$i++;endforeach;?>
   </tbody>
 </table>
 
