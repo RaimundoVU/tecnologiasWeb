@@ -215,7 +215,22 @@ class students extends MY_Controller {
 		try {
 			$matricula = $this->input->post("matricula");
 			$data['asignaturas'] = $this->student_model->getStudentSubjects($matricula);
-			echo json_encode($data);
+			$data['matricula'] = $matricula;
+			return $this->load->view('resumeTable',$data);
+			//echo json_encode($data);
+		} catch (\Exception $e) {
+			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
+			return;
+		}
+	}
+
+	public function getStudentGrades()
+	{
+		try {
+			$matricula = $this->input->post("matricula");
+			$id_ins_asig = $this->input->post("id_ins_asig");
+			$data['grades'] = $this->student_model->getStudentGrades($matricula, $id_ins_asig);
+			return $this->load->view('resumeGrades', $data);
 		} catch (\Exception $e) {
 			echo json_encode(['ok'=>false, 'error'=>$e->getMessage()]);
 			return;

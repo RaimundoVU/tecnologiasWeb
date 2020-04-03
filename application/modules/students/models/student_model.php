@@ -153,6 +153,14 @@ class Student_model extends CI_Model {
     return $this->db->query($query)->result();
   }
 
+  function getStudentGrades($matricula, $id_ins_asig) 
+  {
+    $query = "SELECT *
+              FROM nota,(SELECT * FROM `evaluacion` WHERE id_ins_asignatura = $id_ins_asig) AS T1
+              WHERE T1.id_evaluacion = nota.id_evaluacion AND nota.matricula_estudiante = $matricula";
+    return $this->db->query($query)->result();  
+  }
+
 }
 
 /* End of file User_model.php */

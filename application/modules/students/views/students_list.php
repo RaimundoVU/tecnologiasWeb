@@ -226,19 +226,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</button>
 			</div>
 			<div class="modal-body">
-				<div id="resume_content">
-					<? $asignaturas = json_decode($res);
-						$i = 0;
-						var_dump($asignaturas);
-						foreach($asignaturas as $row) :
-					?>
-						<p><? echo $row ?></p>
-					<? $i++;
-					endforeach; ?>
+				<h5>Asignaturas Cursadas</h5>
+				<div id="resume-table">
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-				<button class="btn btn-success" onclick="guardarCambios()">Guardar</button>
+				<button class="btn btn-warning" data-dismiss="modal">Listo</button>
 			</div>
 		</div>
 	</div>
@@ -327,14 +319,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			{
 				matricula: matricula
 			},
-			function(res) {
-				var array = JSON.parse(res)
-				console.log(JSON.parse(res).asignaturas);
-				$("#resume_content").html(res);
-
-				/*array.forEach( function(valor, indice, array){
-					$("#asignatura_name").text(valor.nombre);
-				})*/
+			function(url, res) {
+				$("#resume-table").html(url, res);
 				$("#student_resume_modal").modal('show');
 			} 
 		);
