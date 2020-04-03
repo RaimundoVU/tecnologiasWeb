@@ -233,7 +233,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<div class="form-group ">
 				<label for="exampleInputPassword1">Nombre del estudiante</label>
-    			<input class="form-control " type="text" id="name_input_add" placeholder="Nombre de la asignatura" />
+    			<input class="form-control " type="text" id="name_input_add" placeholder="Nombre del estudiante" />
             </div>
 
 			<div class="row">
@@ -248,7 +248,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="col-6">
 			<div class="form-group ">
 				<label for="exampleInputPassword1">Apellido Materno</label>
-    			<input class="form-control " type="text" id="lastname2_input_add" placeholder="Apellido Paterno" />
+    			<input class="form-control " type="text" id="lastname2_input_add" placeholder="Apellido Materno" />
             </div>
 			</div>
 			
@@ -427,7 +427,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				let name = $("#name_input_edit").val();
 				let code = $("#subject_code_edit").val();
 				let proffesor = $("#select_proffesor1").val();
-				let semestre = $("#select_proffesor1").val();
+				let semestre = $("#select_semester1").val();
 				$.ajax({
 					url: "<?php echo base_url('subject/edit_subject_with_instance'); ?>",
 					method: "POST",
@@ -464,7 +464,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					url: "<?php echo base_url('students/add_student'); ?>",
 					method: "POST",
 					data: {'matricula':matricula, 'nombre':name, 'apellido_p':lastname1, 'apellido_m':lastname2, 'subject_id': id},
-					success:function(rspuesta){
+					success:function(respuesta){
 
 						console.log(respuesta);
 						location.reload();

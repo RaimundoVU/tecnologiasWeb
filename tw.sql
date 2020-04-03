@@ -64,7 +64,7 @@ CREATE TABLE nota(
 
 	id_nota INTEGER PRIMARY KEY AUTO_INCREMENT,
 	observacion VARCHAR(140) NOT NULL,
-	valor DECIMAL NOT NULL,
+	valor DOUBLE NOT NULL,
 	matricula_estudiante INTEGER NOT NULL,
 	id_evaluacion INTEGER NOT NULL
 
