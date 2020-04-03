@@ -32,7 +32,7 @@ class grade extends MY_Controller {
 		$grade = $this->input->post("grade");
 		$obs = $this->input->post("obs");
 		$matricula = $this->input->post("matricula");
-		$evId = $this->input->post("idEvaluation"); 
+		$evId = $this->input->post("idEvaluation");
 		return $this->gradeModel->updateGrade($grade, $obs, $matricula, $evId);
 	}
 

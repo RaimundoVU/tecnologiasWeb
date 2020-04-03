@@ -21,7 +21,7 @@
                 <td>
                     <?= $grade->nombre." ".$grade->apellido_paterno." ".$grade->apellido_materno?>
                 <td>
-                    <div style="color: <?php if ($grade->valor <4) {echo "red";} else { echo 'black';}?>"> <?= $grade->valor ?> </div>
+                    <div style="color: <?php if ($grade->valor <4) {echo "red";} else { echo 'black';}?>" char="character"> <?= $grade->valor ?> </div>
 					<input id="nota_<?= $grade->matricula?>" type="hidden" readonly value="<?= $grade->valor?>">
                 </td>
                 <td>
