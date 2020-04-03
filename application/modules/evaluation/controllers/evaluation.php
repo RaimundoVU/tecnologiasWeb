@@ -15,6 +15,9 @@ class evaluation extends MY_Controller {
 	}
 
 	public function ev($id) {
+		if (!$this->session->userdata('type')){
+			redirect(base_url());
+		}
 		$data['id'] = $id;
 		$this->render_page('evaluation', $data);
 	}
@@ -39,5 +42,14 @@ class evaluation extends MY_Controller {
 		$date = $this->input->post("date");
 		$id = $this->input->post("idEv");
 		return $this->evaluationModel->updateEvaluation($title, $description, $date, $id);
+	}
+
+	public function getEvalutationsAway($email){
+		$data = $this->evaluationModel->getEvalutationsAway($email);
+
+	}
+
+	public function getEvaluationsAgo(){
+		$data = $this->evaluationModel->getEvaluationsAgo($email);
 	}
 }

@@ -32,8 +32,16 @@ class grade extends MY_Controller {
 		$grade = $this->input->post("grade");
 		$obs = $this->input->post("obs");
 		$matricula = $this->input->post("matricula");
-		$evId = $this->input->post("idEvaluation"); 
+		$evId = $this->input->post("idEvaluation");
 		return $this->gradeModel->updateGrade($grade, $obs, $matricula, $evId);
+	}
+
+
+	public function detail_monitor($id)
+	{
+		$data['grades'] = $this->gradeModel->getStudentsWithoutGrade($id);
+		$data['id_evaluacion'] = $id;
+		$this->render_page('grade_monitor_table', $data);
 	}
 
 }

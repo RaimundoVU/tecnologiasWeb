@@ -8,6 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <meta charset="utf-8">
   <title>Tecnologías web - Proyecto</title>
   <script type="text/javascript" src="<?= base_url('../js/jquery-3.4.1.js'); ?>"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script type="text/javascript" src="<?= base_url() ?>../js/bs/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -83,7 +84,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <li class="nav-item active">
         <a class="nav-link" href="<?=base_url()?>dashboard">Home <span class="sr-only">(current)</span></a>
       </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="<?=base_url()?>subject">Lista Asignaturas <span class="sr-only">(current)</span></a>
+      </li>
+	  </li> 
+	  <li class="nav-item active">
+	  	<a class="nav-link" href="<?=base_url()?>reports">Reportes <span class="sr-only">(current)</span></a>
+	  </li>
 	</ul>
+	<div class="dropdown">
+	<? if(count($evaluationsAway)+count($evaluationsAgo)>0) :?>
+	<button class="dropdown-toggle btn-primary btn" href="#" id="reminderDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		
+			<?echo (count($evaluationsAway)+count($evaluationsAgo))?>
+		
+		<i class="fas fa-bell"></i>
+	</button>
+	<? endif; ?>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+			<?$i=0; foreach( $evaluationsAway as $row):?>
+			<a class="dropdown-item"> Evaluacion <? echo ($row->topico) ?> de  <? echo($row->nombre)?> para el <? echo ($row->fecha)?></a>
+			<?$i++;endforeach;?>
+			<?$i=0; foreach( $evaluationsAgo as $row):?>
+			<a class="dropdown-item"> Evaluacion <? echo ($row->topico) ?> de  <? echo($row->nombre)?> hecha el <? echo ($row->fecha)?></a>
+			<?$i++;endforeach;?>
+        </div>
+	</div>
 	<div class="dropdown">
 	<button class="dropdown-toggle btn-primary btn" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  Perfil

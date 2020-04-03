@@ -68,13 +68,11 @@ class Student_model extends CI_Model {
   public function add_nota($id_subject, $matricula){
     $this->db->select('*');
     $this->db->from('evaluacion');
-    $this->db->where('id_ins_asignatura', $id_subject);var_dump('hola1');
+    $this->db->where('id_ins_asignatura', $id_subject);
 
     $query = $this->db->get();    
     if ($query->num_rows() > 0) {
-      var_dump('igggg');
       foreach ($query->result() as $row) {
-        var_dump('hola');
         $data = [
           'observacion' => '',
           'valor' => 0,
@@ -116,6 +114,61 @@ class Student_model extends CI_Model {
       return $data;
     }
     return [];
+  }
+
+  public function get_students_alphabetical($id_ins)
+  {
+    
+    $this->db->select('*');
+    $this->db->from('estudiante');
+    $this->db->join('asignatura_estudiante', 'estudiante.matricula=asignatura_estudiante.id_estudiante', 'inner');
+    $this->db->where('asignatura_estudiante.id_instancia_asignatura', $id_ins);
+    $this->db->order_by('nombre','desc');
+    return $this->db->get()->result_array();
+
+  }
+
+  function getRows($params = array()){
+    $this->db->select("*");
+    $this->db->from('estudiante');
+    
+    
+    //search by terms
+    if(!empty($params['searchTerm'])){
+        $this->db->like('matricula', $params['searchTerm']);
+    }
+    
+    $this->db->order_by('matricula', 'asc');
+    
+    if(array_key_exists("matricula", $params)){
+        $this->db->where($params['matricula']);
+        $query = $this->db->get();
+        $result = $query->row_array();
+    }else{
+        $query = $this->db->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+    }
+
+     //return fetched data
+    return $result;
+}
+
+  function getStudentSubjects($matricula)
+  {
+    $query = "SELECT * FROM asignatura,
+            (SELECT id AS id_ins_asig,anho, semestre, id_asignatura FROM instancia_asignatura, 
+            (SELECT id_instancia_asignatura FROM asignatura_estudiante WHERE $matricula = asignatura_estudiante.id_estudiante) 
+            AS T2 WHERE T2.id_instancia_asignatura = instancia_asignatura.id) AS T1 
+            WHERE asignatura.id = T1.id_asignatura";
+    return $this->db->query($query)->result();
+  }
+
+  function getStudentGrades($matricula, $id_ins_asig) 
+  {
+    $query = "SELECT *
+              FROM nota,(SELECT * FROM `evaluacion` WHERE id_ins_asignatura = $id_ins_asig) AS T1
+              WHERE T1.id_evaluacion = nota.id_evaluacion AND nota.matricula_estudiante = $matricula";
+    return $this->db->query($query)->result();  
   }
 
 }
