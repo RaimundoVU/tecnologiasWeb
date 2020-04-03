@@ -27,6 +27,13 @@ class Reports_model extends CI_Model {
   {
     //  
   }
+
+  function getTeachersByDate($date)
+  {
+      $query = "select * from usuario where fechaIngreso <= '".$date."' AND usuario.tipo = 3";
+      
+      return $this->db->query($query)->result();
+  }
   
 }
 

@@ -29,9 +29,8 @@ CREATE TABLE usuario(
 	apellido_materno VARCHAR(40) NOT NULL,
 	apellido_paterno VARCHAR(40) NOT NULL,
 	clave VARCHAR(20) NOT NULL,
-	tipo INTEGER NOT NULL
-
-
+	tipo INTEGER NOT NULL,
+	fechaIngreso DATE
 );
 
 CREATE TABLE directorio(

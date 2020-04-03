@@ -35,4 +35,10 @@ class reports extends MY_Controller {
 		return $this->load->view('report5');
 	}
 
+	public function getTeachersByDate() {
+		$date = $this->input->post("date");
+
+		echo json_encode($this->reports_model->getTeachersByDate($date));
+	}
+
 }
