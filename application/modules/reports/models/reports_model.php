@@ -40,6 +40,12 @@ class Reports_model extends CI_Model {
       
       return $this->db->query($query)->result();
   }
+  function getTeachersDate($date)
+  {
+      $query = "SELECT DISTINCT instancia_asignatura.*, asignatura.*, usuario.* FROM usuario, instancia_asignatura, asignatura, evaluacion, nota, (SELECT instancia_asignatura.id as id, COUNT(nota.id_nota) as cant from instancia_asignatura, evaluacion, nota, usuario where instancia_asignatura.id = evaluacion.id_ins_asignatura and evaluacion.id_evaluacion = nota.id_evaluacion and usuario.id_usuario = instancia_asignatura.id_usuario and nota.valor<=0 GROUP BY instancia_asignatura.id) as t1 WHERE usuario.tipo=3 and instancia_asignatura.estado= 1 and usuario.id_usuario = instancia_asignatura.id_usuario AND asignatura.id = instancia_asignatura.id_asignatura AND instancia_asignatura.id = evaluacion.id_ins_asignatura and evaluacion.id_evaluacion = nota.id_evaluacion AND evaluacion.fecha >= '".$date."' and t1.cant <> 0 and t1.id = instancia_asignatura.id;";
+      
+      return $this->db->query($query)->result();
+  }
 
   public function getSubjectAverage()
     {

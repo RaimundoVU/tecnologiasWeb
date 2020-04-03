@@ -52,6 +52,11 @@ class reports extends MY_Controller {
 
 		echo json_encode($this->reports_model->getTeachersByDate($date));
 	}
+	public function getTeachersDate() {
+		$date = $this->input->post("date");
+
+		echo json_encode($this->reports_model->getTeachersDate($date));
+	}
 
 	public function getSubjectsByNumber()
 	{
