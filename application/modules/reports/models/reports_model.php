@@ -34,6 +34,31 @@ class Reports_model extends CI_Model {
       
       return $this->db->query($query)->result();
   }
+
+  public function getSubjectAverage()
+    {
+        
+        $query = "select AVG(nota.valor) as promedio, instancia_asignatura.semestre as semestre, 
+        instancia_asignatura.anho as anho ,asignatura.nombre 
+        FROM instancia_asignatura,asignatura,nota,evaluacion 
+        WHERE instancia_asignatura.id_asignatura=asignatura.id 
+        and evaluacion.id_ins_asignatura=instancia_asignatura.id and nota.id_evaluacion = evaluacion.id_evaluacion 
+        GROUP BY(instancia_asignatura.id)";
+        return $this->db->query($query)->result();
+        
+    }
+
+  public function report4($quantity)
+  {
+      $query = "select cantidad, semestre,anho,nombre from (select COUNT(estudiante.matricula) as cantidad, 
+      instancia_asignatura.semestre as semestre,instancia_asignatura.anho as anho,asignatura.nombre as nombre 
+      FROM estudiante,instancia_asignatura,asignatura,asignatura_estudiante 
+      where instancia_asignatura.id_asignatura = asignatura.id and 
+      estudiante.matricula = asignatura_estudiante.id_estudiante and 
+      instancia_asignatura.id = asignatura_estudiante.id_instancia_asignatura GROUP BY(instancia_asignatura.id)) as 
+      asignaturas where cantidad >'$quantity'";
+      return $this->db->query($query)->result();
+  }
   
 }
 
