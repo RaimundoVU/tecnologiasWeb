@@ -34,6 +34,13 @@ class Reports_model extends CI_Model {
     return $this->db->query($query)->result();
   }
   
+
+  function getSubjectsByCant($cant)
+  {
+      $query = "SELECT * FROM asignatura, (SELECT instancia_asignatura.id as id_ins, instancia_asignatura.id_asignatura as id_asig, instancia_asignatura.semestre as sem, instancia_asignatura.anho as anho, count(estudiante.matricula) as cant FROM instancia_asignatura, asignatura_estudiante, estudiante where instancia_asignatura.id = asignatura_estudiante.id_instancia_asignatura and estudiante.matricula = asignatura_estudiante.id_estudiante GROUP BY instancia_asignatura.id) as t1 WHERE asignatura.id = t1.id_asig and t1.cant>".$cant.";";
+      
+      return $this->db->query($query)->result();
+  }
 }
 
 /* End of file User_model.php */

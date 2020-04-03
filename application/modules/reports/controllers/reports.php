@@ -20,8 +20,7 @@ class reports extends MY_Controller {
 	}
 
 	public function getTableReport2() {
-
-	
+		//$data['data'] = $this->reports_model->getReport2();
 		return $this->load->view('report2');
 	}
 
@@ -36,6 +35,11 @@ class reports extends MY_Controller {
 
 	public function getTableReport5() {
 		return $this->load->view('report5');
+	}
+
+	public function getSubjectsByCant() {
+		$cant = $this->input->post("cant");
+		echo json_encode($this->reports_model->getSubjectsByCant($cant));
 	}
 
 }
