@@ -39,7 +39,8 @@ class User_model extends CI_Model {
   	$data['apellido_materno'] = $mothers_last_name;
   	$data['apellido_paterno'] = $last_name;
   	$data['clave'] = $password;
-  	$data['tipo'] = $user_type;
+	$data['tipo'] = $user_type;
+	$data['fechaIngreso'] = date('Y-m-d',time());
 
   	$this->db->insert('usuario', $data);
   }

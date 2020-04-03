@@ -68,13 +68,11 @@ class Student_model extends CI_Model {
   public function add_nota($id_subject, $matricula){
     $this->db->select('*');
     $this->db->from('evaluacion');
-    $this->db->where('id_ins_asignatura', $id_subject);var_dump('hola1');
+    $this->db->where('id_ins_asignatura', $id_subject);
 
     $query = $this->db->get();    
     if ($query->num_rows() > 0) {
-      var_dump('igggg');
       foreach ($query->result() as $row) {
-        var_dump('hola');
         $data = [
           'observacion' => '',
           'valor' => 0,
@@ -116,6 +114,18 @@ class Student_model extends CI_Model {
       return $data;
     }
     return [];
+  }
+
+  public function get_students_alphabetical($id_ins)
+  {
+    
+    $this->db->select('*');
+    $this->db->from('estudiante');
+    $this->db->join('asignatura_estudiante', 'estudiante.matricula=asignatura_estudiante.id_estudiante', 'inner');
+    $this->db->where('asignatura_estudiante.id_instancia_asignatura', $id_ins);
+    $this->db->order_by('nombre','desc');
+    return $this->db->get()->result_array();
+
   }
 
   function getRows($params = array()){

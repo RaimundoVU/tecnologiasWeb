@@ -6,7 +6,7 @@ USE proyecto_tw;
 
 CREATE TABLE asignatura(
 
-	id INTEGER PRIMARY KEY,
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
 	nombre VARCHAR(50) NOT NULL,
 	codigo VARCHAR(50) NOT NULL
 
@@ -29,9 +29,8 @@ CREATE TABLE usuario(
 	apellido_materno VARCHAR(40) NOT NULL,
 	apellido_paterno VARCHAR(40) NOT NULL,
 	clave VARCHAR(20) NOT NULL,
-	tipo INTEGER NOT NULL
-
-
+	tipo INTEGER NOT NULL,
+	fechaIngreso DATE
 );
 
 CREATE TABLE directorio(
@@ -47,6 +46,7 @@ CREATE TABLE instancia_asignatura(
 	id_asignatura INTEGER NOT NULL,
 	semestre INTEGER NOT NULL,
 	anho INTEGER NOT NULL,
+	estado  TINYINT(1) DEFAULT 1,
 	id_usuario INTEGER
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE nota(
 
 	id_nota INTEGER PRIMARY KEY AUTO_INCREMENT,
 	observacion VARCHAR(140) NOT NULL,
-	valor DECIMAL NOT NULL,
+	valor DOUBLE NOT NULL,
 	matricula_estudiante INTEGER NOT NULL,
 	id_evaluacion INTEGER NOT NULL
 
