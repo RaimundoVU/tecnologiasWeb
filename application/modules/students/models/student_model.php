@@ -68,13 +68,11 @@ class Student_model extends CI_Model {
   public function add_nota($id_subject, $matricula){
     $this->db->select('*');
     $this->db->from('evaluacion');
-    $this->db->where('id_ins_asignatura', $id_subject);var_dump('hola1');
+    $this->db->where('id_ins_asignatura', $id_subject);
 
     $query = $this->db->get();    
     if ($query->num_rows() > 0) {
-      var_dump('igggg');
       foreach ($query->result() as $row) {
-        var_dump('hola');
         $data = [
           'observacion' => '',
           'valor' => 0,

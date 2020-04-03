@@ -285,8 +285,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			processData: false,
 			contentType: false,
 			success: function(data) {
-				console.log(data);
+				$("#container").hide('slow');
+				location.reload();
 				alert(data);
+				$("#container").show('slow');
 			}
 		});
 	}

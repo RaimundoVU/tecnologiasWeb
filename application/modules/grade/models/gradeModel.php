@@ -22,7 +22,7 @@ class gradeModel extends CI_Model{
 
 
     function updateGrade($grade, $obs, $matricula, $idEvaluation) {
-        $query= "UPDATE nota SET valor = '".$grade."', observacion = '".$obs."' WHERE matricula_estudiante = ".$matricula." AND id_evaluacion =".$idEvaluation;
+        $query= "UPDATE nota SET valor = ".$grade.", observacion = '".$obs."' WHERE matricula_estudiante = ".$matricula." AND id_evaluacion =".$idEvaluation;
         return $this->db->query($query);
     }
 

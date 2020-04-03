@@ -16,7 +16,10 @@ class reports extends MY_Controller {
 	}
 
 	public function getTableReport1() {
-		return $this->load->view('report1');
+
+		$subjectData = $this->reports_model->getSubjectAverage();
+		$data['subjectData'] = $subjectData; 
+		return $this->load->view('report1',$data);
 	}
 
 	public function getTableReport2() {
@@ -40,6 +43,18 @@ class reports extends MY_Controller {
 	public function getSubjectsByCant() {
 		$cant = $this->input->post("cant");
 		echo json_encode($this->reports_model->getSubjectsByCant($cant));
+	}
+
+	public function getTeachersByDate() {
+		$date = $this->input->post("date");
+
+		echo json_encode($this->reports_model->getTeachersByDate($date));
+	}
+
+	public function getSubjectsByNumber()
+	{
+		$number = $this->input->post('number');
+		echo json_encode($this->reports_model->report4($number));
 	}
 
 }
