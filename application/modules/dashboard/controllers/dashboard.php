@@ -17,6 +17,9 @@ class dashboard extends MY_Controller {
 	public function index( $instances = null)
 	{
 		//$this->load->view('users_list');
+		if (!$this->session->userdata('type')){
+			redirect(base_url());
+		}
 		$data['users'] = $this->user_model->get_all();
 		$data['subjects'] = $this->subject_model->get_all();
 

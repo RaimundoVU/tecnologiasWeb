@@ -11,7 +11,9 @@ class reports extends MY_Controller {
 
 	public function index()
 	{
-	
+		if (!$this->session->userdata('type')){
+			redirect(base_url());
+		}
 		$this->render_page('reports_view');
 	}
 

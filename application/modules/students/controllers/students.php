@@ -13,6 +13,9 @@ class students extends MY_Controller {
 
 	public function index()
 	{
+		if (!$this->session->userdata('type')){
+			redirect(base_url());
+		}
 		//$this->load->view('users_list');
 		$data['id_asig'] = 0;
 		$data['resultado'] = $this->list_all();

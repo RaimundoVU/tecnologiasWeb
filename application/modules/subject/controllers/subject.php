@@ -42,6 +42,10 @@ class Subject extends MY_Controller {
 				$data['subjects'] = $this->subject_instance_model->get_all($this->session->userdata('email'));
 				$this->render_page('subject_list',$data);
 				break;
+			default:
+				redirect(base_url());
+				break;
+				
 		}
 		/*$data['subjects'] = $this->subject_model->get_all();
 		$this->render_page('subject_list',$data);*/

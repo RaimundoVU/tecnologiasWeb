@@ -15,6 +15,9 @@ class evaluation extends MY_Controller {
 	}
 
 	public function ev($id) {
+		if (!$this->session->userdata('type')){
+			redirect(base_url());
+		}
 		$data['id'] = $id;
 		$this->render_page('evaluation', $data);
 	}
